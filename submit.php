@@ -4,11 +4,11 @@ include 'header.php'; ?>
 
   <form action="submitsqli.php" method="post" />
   <p>
-    Query: <input type="text" name="query" / /><br />
+    Query: <input type="text" name="query" /><br />
     Status: <select name="status">
               <option value="open">Open</option>
               <option value="closed">Closed</option>
-    </select> 
+    </select>
   </p>
   <input type="submit" value="Submit" / />
 </form>
