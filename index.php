@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
         echo $row["tID"]. " - Submitted: " . $row["date"]. "<br>";
     }
 } else {
-    echo "No Tickets Found";
+    echo "There are no open tickets";
 }
 $con->close();
 

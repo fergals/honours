@@ -1,17 +1,28 @@
 <?php
 include 'header.php'; ?>
-<div id="tickets">
+  <form class="form-horizontal" action="submitsqli.php" method="post" />
+    <div class="form-group">
+      <label for="inputEmail3" class="col-sm-2 control-label">Query</label>
+      <div class="col-sm-10">
+        <textarea class='form-control' rows='5' name='query'></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword3" class="col-sm-2 control-label">Staus</label>
+      <div class="col-sm-10">
+        <select name="status" class="form-control">
+          <option value="Open">Open</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
 
-  <form action="submitsqli.php" method="post" />
-  <p>
-    Query: <input type="text" name="query" /><br />
-    Status: <select name="status">
-              <option value="open">Open</option>
-              <option value="closed">Closed</option>
-    </select>
-  </p>
-  <input type="submit" value="Submit" / />
-</form>
 
 </div>
 <?php

@@ -15,7 +15,9 @@ include 'header.php'; ?>
     <strong>User Information</strong><br />
     Name:<br />
     E-mail:<br />
+    Telephone:<br />
     Department:<br />
+    User Type:<br />
 
   </div>
 
@@ -33,7 +35,7 @@ include 'header.php'; ?>
           echo "<hr />";
 
           echo "<div class='form-group'>
-                <form action='submitsqli.php' method='post'>
+                <form action='none.php' method='post'>
                 <textarea class='form-control' rows='5' id='comment'></textarea>
                 <button type='submit' class='btn btn-default'>Submit</button>
                 </form>

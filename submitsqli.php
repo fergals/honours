@@ -11,17 +11,23 @@ $userid = 1;
 $date = date("Y-m-d");
 $ticketid = 'I' . $date . '003';
 
+    $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    $stmt = $db->prepare("INSERT INTO ticket (userid, tID, query, date, status) VALUES (:userid, :tID, :query, :timestamp, :status)");
 
-// Perform SQL queries on DB
-$sql = "INSERT INTO ticket (userid, tID, query, date, status) VALUES ('$userid','$ticketid','$query','$timestamp','$status')";
+    $stmt->bindParam(':userid', $userid, PDO::PARAM_STR, 100);
+    $stmt->bindParam(':tID', $ticketid, PDO::PARAM_STR, 100);
+    $stmt->bindParam(':query', $query, PDO::PARAM_STR, 100);
+    $stmt->bindParam(':timestamp', $date, PDO::PARAM_STR, 100);
+    $stmt->bindParam(':status', $status, PDO::PARAM_STR, 100);
 
-// Display error or display successfully
-if (mysqli_query($con, $sql)) {
-    echo "Added ticket successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($con);
-}
+    if($stmt->execute()) {
+      echo "Ticket has successfully been added";
+    }
+    else {
+      echo "Didnt work";
+    }
 
-mysqli_close($con);
+    $db = null;
 ?>
