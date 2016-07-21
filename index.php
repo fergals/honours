@@ -13,8 +13,8 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         echo $row["tID"];
-        echo " - Submitted: " . $row["date"];
-        echo "<a href=\"ticket.php?id=".$row['id']."\"> Open Ticket</a><br />";
+        echo " - Submitted: " . $row["date"] . " ";
+        echo "<a href=\"ticket.php?id=".$row['id']."\">Open Ticket</a><br />";
     }
 
 } else {

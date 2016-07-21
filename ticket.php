@@ -2,33 +2,51 @@
 include_once 'dbconnect.php';
 include 'header.php'; ?>
 
-<div id="content">
-  <h1>Your selected ticket</h1>
+<div class="container">
+<div class="row">
+  <div class="col-xs-4">
+    <strong>I2016-07-07003</strong><br />
+    Queue: 1st Line<br />
+    Status: Open<br />
+    Urgency: Normal<br /></br>
 
-<?php
-$ticketid = $_GET['id'];
-$sql = "SELECT * FROM ticket WHERE id = '$ticketid'";
-$username = "Select username FROM users WHERE id = 1";
-$result = $con->query($sql);
+    Submitted: <br /><br />
 
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "<div='ticket'>" . $row["tID"] . " Submitted by: ". $username . "(" . $row["status"] . ")<br />";
-        echo $row["query"];
-        echo "<div id='ticket-reply'>
-              <form action='submitsqli.php' method='post' /><p>
-              Query: <input type='text' name='query' />
-              <input type='submit' value='Submit' />
-              </form>
-              </div>";
-    }
+    <strong>User Information</strong><br />
+    Name:<br />
+    E-mail:<br />
+    Department:<br />
 
-} else {
-    echo "No Tickets Found";
-}
+  </div>
 
-?>
+
+  <div class="col-xs-6">
+  <?php
+  $ticketid = $_GET['id'];
+  $sql = "SELECT * FROM ticket WHERE id = '$ticketid'";
+  $result = $con->query($sql);
+
+  if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+          echo $row["query"] . "<br /><br />";
+          echo "<hr />";
+
+          echo "<div class='form-group'>
+                <form action='submitsqli.php' method='post'>
+                <textarea class='form-control' rows='5' id='comment'></textarea>
+                <button type='submit' class='btn btn-default'>Submit</button>
+                </form>
+                </div>";
+      }
+
+  } else {
+      echo "No Tickets Found";
+  }
+
+  ?>
+  </div>
+</div>
 
 </div>
 
