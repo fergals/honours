@@ -2,8 +2,7 @@
 require_once 'dbconnect.php';
 include 'header.php';
 
-$query = $_POST['query'];
-$status = $_POST['status'];
+$comment= $_POST['comment'];
 $timestamp = date("Y-m-d H:i:s");
 $userid = 1;
 
@@ -14,19 +13,18 @@ $ticketid = 'I' . $date . '003';
     $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $db->prepare("INSERT INTO ticket (userid, tID, query, date, status) VALUES (:userid, :tID, :query, :timestamp, :status)");
+    $stmt = $db->prepare("INSERT INTO comments (userid, tID, date, comment) VALUES (:userid, :tID, :date, :comment)");
 
     $stmt->bindParam(':userid', $userid, PDO::PARAM_STR, 100);
     $stmt->bindParam(':tID', $ticketid, PDO::PARAM_STR, 100);
-    $stmt->bindParam(':query', $query, PDO::PARAM_STR, 10000);
-    $stmt->bindParam(':timestamp', $date, PDO::PARAM_STR, 100);
-    $stmt->bindParam(':status', $status, PDO::PARAM_STR, 100);
+    $stmt->bindParam(':date', $timestamp, PDO::PARAM_STR, 10000);
+    $stmt->bindParam(':comment', $comment, PDO::PARAM_STR, 100);
 
     if($stmt->execute()) {
-      echo "Ticket has successfully been added";
+      echo "Comment added successfully";
     }
     else {
-      echo "Didnt work";
+      echo "Couldn't add comment";
     }
 
     $db = null;

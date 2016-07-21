@@ -23,31 +23,32 @@ include 'header.php'; ?>
 
 
   <div class="col-xs-6">
-  <?php
-  $ticketid = $_GET['id'];
-  $sql = "SELECT * FROM ticket WHERE id = '$ticketid'";
-  $result = $con->query($sql);
+<?php
+    $ticketid = $_GET['id'];
+    $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  if ($result->num_rows > 0) {
-      // output data of each row
-      while($row = $result->fetch_assoc()) {
-          echo $row["query"] . "<br /><br />";
-          echo "<hr />";
+    $stmt = $db->prepare("SELECT userid, tID, date, query FROM ticket where id = '$ticketid'");
 
-          echo "<div class='form-group'>
-                <form action='none.php' method='post'>
-                <textarea class='form-control' rows='5' id='comment'></textarea>
-                <button type='submit' class='btn btn-default'>Submit</button>
-                </form>
-                </div>";
-      }
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  } else {
-      echo "No Tickets Found";
-  }
+    print_r($result);
+?>
 
-  ?>
-  </div>
+<br />
+<br />
+
+<hr />
+    <div class='form-group'>
+      <form action='submitcomment.php' method='post'>
+        <textarea class='form-control' rows='5' name='comment'></textarea>
+        <button type='submit' class='btn btn-default'>Submit</button>
+      </form>
+    </div>
+
+
+</div>
 </div>
 
 </div>
