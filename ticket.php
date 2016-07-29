@@ -7,8 +7,9 @@ include 'header.php'; ?>
 <div class="col-xs-4">
 
 <?php
- $ticketid1 = $_GET['id'];
- $ticketinfo = $db->query("SELECT userid, tID, date, query FROM ticket where id = '$ticketid1'");
+ $ticketid = $_GET['id'];
+ $userid = rand(1,6);
+ $ticketinfo = $db->query("SELECT userid, tID, date, query FROM ticket where id = '$ticketid'");
  while($r = $ticketinfo->fetch(PDO::FETCH_OBJ)) {
 echo '<strong>' . $r->tID . '</strong><br />';
 echo 'Queue: First Line<br />';
@@ -18,7 +19,7 @@ echo 'Category: Computer Issues<br />';
 echo 'Department: Finance <br /><br />';
 echo 'Submitted: 10/10/16<br /><br />';
 }
-$userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = 1");
+$userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = '$userid'");
 while($u = $userinfo->fetch(PDO::FETCH_OBJ)) {
 echo '<strong>User Information</strong><br />';
 echo 'Name: ' . $u->firstname . ' ' . $u->surname . '<br />';
@@ -33,24 +34,35 @@ echo 'User Type: ' . $u->usertype;
 
   <div class="col-xs-6">
 <?php
-    $ticketid = $_GET['id'];
     $result = $db->query("SELECT userid, tID, date, query FROM ticket where id = '$ticketid'");
     while($r = $result->fetch(PDO::FETCH_OBJ)) {
-      echo $r->query;}
+      echo $r->query . '<br /><br /><hr />';
+    }
+
+   $comments = $db->query("SELECT comment, date FROM comments where tID = 'I2016-07-21003'");
+    while($c = $comments->fetch(PDO::FETCH_OBJ)) {
+      echo $c->comment . ' @ ' . $c->date .'<br /><br />';
+    }
 ?>
 
-<br />
-<br />
-
-<hr />
     <div class='form-group'>
+      <strong>Add Comment to Ticket</strong>
       <form action='submitcomment.php' method='post'>
         <textarea class='form-control' rows='5' name='comment'></textarea>
+
+        <?php
+        //Need tID and uID in order to pass comment - will update when include global variables
+         $commentinfo = $db->query("SELECT userid, tID, date, query FROM ticket where id = '$ticketid'");
+         while($r = $commentinfo->fetch(PDO::FETCH_OBJ)) {
+
+        echo "<textarea name='commentTID' rows='1' cols='14'>" . $r->tID ."</textarea>";
+        echo "<textarea name='commentuID' rows='1' cols='2'>" . $userid ."</textarea>";
+        }
+         ?>
+
         <button type='submit' class='btn btn-default'>Submit</button>
       </form>
     </div>
-
-
 </div>
 </div>
 
