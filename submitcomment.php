@@ -15,7 +15,7 @@ include 'header.php';
     $stmt->bindParam(':comment', $comment, PDO::PARAM_STR, 10000);
 
     if($stmt->execute()) {
-      echo "Successfully added comment - <a href='index.php'>Go Back</a>";
+      echo "Successfully added comment - <a href='ticket.php?id=" . $tID . "'>Go Back</a>";
     }
     else {
       echo "Error submitting user to database - <a href='index.php'>Go Back</a>";

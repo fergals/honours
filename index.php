@@ -3,41 +3,24 @@ include_once 'dbconnect.php';
 include 'header.php'; ?>
 
 <div id="content">
-  <h1>Your open tickets:</h1>
-
+<h1>Your open tickets:</h1>
 <?php
-$sql = "SELECT tID, id, date FROM ticket WHERE status='Open'";
-$result = $con->query($sql);
 
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo $row["tID"];
-        echo " - Submitted: " . $row["date"] . " ";
-        echo "<a href=\"ticket.php?id=".$row['id']."\">Open Ticket</a><br />";
-    }
-
-} else {
-    echo "No Tickets Found";
+$opentickets = $db->query("SELECT tID, id, date FROM ticket WHERE status='Open'");
+while ($o = $opentickets->fetch(PDO::FETCH_OBJ)) {
+  echo $o->tID;
+  echo " - Submitted: " . $o->date . " - ";
+  echo "<a href='ticket.php?id=" . $o->tID . "'>Open Ticket</a><br />";
 }
 
-?>
+echo "<h1>Your closed tickets:</h1>";
 
-<h1>Your closed tickets:</h1>
-<?php  $sql = "SELECT tID, date FROM ticket WHERE status='Closed'";
-$result = $con->query($sql);
-
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo $row["tID"]. " - Submitted: " . $row["date"]. "<br>";
-    }
-} else {
-    echo "No Tickets Found";
+$closedtickets = $db->query("SELECT tID, id, date FROM ticket WHERE status='Closed'");
+while ($c = $closedtickets->fetch(PDO::FETCH_OBJ)) {
+  echo $c->tID;
+  echo " - Submitted: " . $c->date . " - ";
+  echo "<a href='ticket.php?id=" . $c->tID . "'>View Closed Ticket</a><br />";
 }
-$con->close();
-
 ?>
 </div>
-
 <?php include 'footer.php'; ?>
