@@ -19,6 +19,9 @@
           <a class="nav-link" href="submit.php">Submit New Ticket</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="knowledge.php">KnowledgeBase</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="users.php">Users</a>
         </li>
       </ul>

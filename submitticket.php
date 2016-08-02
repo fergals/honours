@@ -19,8 +19,9 @@ $status = $_POST['status'];
 $urgency = $_POST['urgency'];
 $department = $_POST['department'];
 $category = $_POST['category'];
+$hiddenpost = $_POST['hidden'];
 
-$stmt = $db->prepare("INSERT INTO ticket (tID, userid, query, date, queue, status, urgency, department, category) VALUES (:tID, :userid, :query, :date, :queue, :status, :urgency, :department, :category)");
+$stmt = $db->prepare("INSERT INTO ticket (tID, userid, query, date, queue, status, urgency, department, category, hidden) VALUES (:tID, :userid, :query, :date, :queue, :status, :urgency, :department, :category, :hidden)");
 $dateinc = $db->query("SELECT id FROM ticket ORDER BY ID DESC LIMIT 1");
 
 $stmt->bindParam(':tID', $tID, PDO::PARAM_INT, 100);
@@ -32,6 +33,7 @@ $stmt->bindParam(':status', $status, PDO::PARAM_STR, 10000);
 $stmt->bindParam(':urgency', $urgency, PDO::PARAM_STR, 10000);
 $stmt->bindParam(':department', $department, PDO::PARAM_STR, 10000);
 $stmt->bindParam(':category', $category, PDO::PARAM_STR, 10000);
+$stmt->bindParam(':hidden', $hiddenpost, PDO::PARAM_STR, 10000);
 
 if($stmt->execute()) {
   echo "Successfully added ticket - <a href='index.php'>Go Back</a>";
