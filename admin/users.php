@@ -1,5 +1,5 @@
 <?php
-include 'header.php'; ?>
+include '../header.php'; ?>
 <strong>Users should be displayed here</strong><hr />
 
 <strong>Add User</strong><br /><br />
@@ -66,4 +66,4 @@ include 'header.php'; ?>
 
 </div>
 <?php
-include 'footer.php'; ?>
+include '../footer.php'; ?>
