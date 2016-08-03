@@ -12,7 +12,7 @@
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand">
           <img alt="HELP!" width="25px" src="/images/logo.png">
         </a>
       </div>
@@ -20,7 +20,7 @@
         <ul class="nav navbar-nav">
           <li><a href="../index.php">Home<span class="sr-only">(current)</span></a></li>
           <li><a href="../submit.php">Submit New Ticket</a></li>
-          <li><a href="../knowledge.php">KnowedlgeBase</a></li>
+          <li><a href="../knowledge.php">Knowledge Base</a></li>
         </ul>
 
   <ul class="nav navbar-nav navbar-right">
