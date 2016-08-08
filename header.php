@@ -31,7 +31,7 @@
         <li><a href="#">Ticket Management</a></li>
         <li><a href="#">Users</a></li>
       </ul>
-      <li><a href="../admin/users.php">Users</a>
+      <li><a href="../admin/users.php">Profile</a>
       <li><a href="../logout.php">Logout</a>
     </li>
   </ul>
