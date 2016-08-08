@@ -25,13 +25,13 @@
 
   <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
-      <a href="doesnt-work" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+      <a href="../admin/index.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><a href="#">Action</a></li>
         <li><a href="#">Ticket Management</a></li>
         <li><a href="#">Users</a></li>
       </ul>
-      <li><a href="../admin/users.php">Profile</a>
+      <li><a href="../profile.php">Profile</a>
       <li><a href="../logout.php">Logout</a>
     </li>
   </ul>

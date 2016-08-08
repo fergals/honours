@@ -1,47 +1,34 @@
-<?php
-include_once 'dbconnect.php';
-include 'header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>Help! - Online Ticketing System</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
 
-<div id="content">
-<h1>Your open tickets:</h1>
-<?php
+<body>
+  <div class="container">
+      <div class="row">
+          <div class="col-sm-6 col-md-4 col-md-offset-4">
+              <h1 class="text-center login-title">Sign in to to view tickets</h1>
+              <div class="account-wall">
+                  <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120" alt="">
+                  <form class="form-signin">
+                    <input type="text" class="form-control" placeholder="Email" required autofocus>
+                    <input type="password" class="form-control" placeholder="Password" required>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    <label class="checkbox pull-left">
+                    <input type="checkbox" value="remember-me">Remember me</label>
+                    <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                  </form>
+              </div>
+              <a href="registration.php" class="text-center new-account">Create an account </a><a href="main.php" class="text-center new-account">Main</a>
 
-$opentickets = $db->query("SELECT tID, id, date, userid, category, department FROM ticket WHERE status='Open'");
-echo "<table class='table table-striped'>
-      <tr>
-      <th>Ticket</th>
-      <th>Date Submitted</th>
-      <th>Category</th>
-      <th>Department</th></tr>";
-while ($o = $opentickets->fetch(PDO::FETCH_ASSOC)){
-  echo "<tr><td><a href='ticket.php?id=" . $o['tID'] . "'>" . $o['tID'] ."</td>";
-  echo "<td>" . $o['date'] . "</td>";
-  echo "<td>" . $o['category'] . "</td>";
-  echo "<td>" . $o['department'] . "</td></tr>";
-}
-
-echo "</table>";
-
-echo "<h1>Your closed tickets:</h1>";
-
-$closedtickets = $db->query("SELECT tID, id, date, userid, category, department FROM ticket WHERE status='Closed'");
-echo "<table class='table table-striped'>
-      <tr>
-      <th>Ticket</th>
-      <th>Date</th>
-      <th>Category</th>
-      <th>Department</th>
-      <th>Date Closed</th></tr>";
-while ($c = $closedtickets->fetch(PDO::FETCH_ASSOC)) {
-  echo "<tr><td><a href='ticket.php?id=" . $c['tID'] . "'>" . $c['tID'] ."</td>";
-  echo "<td>" . $c['date'] . "</td>";
-  echo "<td>" . $c['category'] . "</td>";
-  echo "<td>" . $c['department'] . "</td>";
-  echo "<td>Date Closed not in SQL</td></tr>";
-}
-
-echo "</table>";
-
-?>
-</div>
-<?php include 'footer.php'; ?>
+          </div>
+      </div>
+  </div>
+</body>
+</html>
