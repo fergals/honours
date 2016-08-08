@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand">
@@ -18,9 +18,8 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="../main.php">Home<span class="sr-only">(current)</span></a></li>
-          <li><a href="../submit.php">Submit New Ticket</a></li>
-          <li><a href="../knowledge.php">Knowledge Base</a></li>
+          <li><a href="../admin/index.php">Home<span class="sr-only">(current)</span></a></li>
+          <li><a href="../admin/newticket.php">Add Ticket</a></li>
         </ul>
 
   <ul class="nav navbar-nav navbar-right">
