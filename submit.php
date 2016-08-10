@@ -33,9 +33,9 @@ include 'header.php'; ?>
       <label for="urgency" class="col-sm-2 control-label">Urgency</label>
       <div class="col-sm-10">
         <select name="urgency" class="form-control">
-          <option value="low">Low</option>
-          <option value="normal">Normal</option>
-          <option value="critical">Crtical</option>
+          <option value="Low">Low</option>
+          <option value="Normal">Normal</option>
+          <option value="Critical">Crtical</option>
         </select>
       </div>
     </div>
