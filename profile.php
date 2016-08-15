@@ -1,6 +1,6 @@
 <?php
-include_once 'dbconnect.php';
-include 'header.php'; ?>
+include_once '/config/dbconnect.php';
+include '/template/header.php'; ?>
 <div id="content">
 <h1>Edit your profile</h1>
 
@@ -36,4 +36,4 @@ $loadprofile = $db->query("SELECT username, firstname, surname, password, email,
 
 </div>
 <?php
-include 'footer.php'; ?>
+include '/template/footer.php'; ?>

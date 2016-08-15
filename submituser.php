@@ -1,6 +1,6 @@
 <?php
-require_once 'dbconnect.php';
-include 'header.php';
+require_once '/config/dbconnect.php';
+include '/template/header.php';
 
     $username = $_POST['username'];
     $firstname = $_POST['firstname'];
@@ -34,4 +34,5 @@ include 'header.php';
     }
 
     $db = null;
+include '/template/footer.php'
 ?>

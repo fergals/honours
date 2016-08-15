@@ -1,6 +1,6 @@
 <?php
-include_once 'dbconnect.php';
-include 'header.php'; ?>
+include_once '/config/dbconnect.php';
+include '/template/header.php'; ?>
 
 <div class="container">
 <div class="row">
@@ -78,4 +78,4 @@ echo 'Submitted: 10/10/16';
 
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include '/template/footer.php'; ?>

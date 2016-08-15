@@ -1,6 +1,6 @@
 <?php
-include_once 'dbconnect.php';
-include 'header.php'; ?>
+include_once '/config/dbconnect.php';
+include '/template/header.php'; ?>
 
 <div id="content">
 <h1>Your open tickets:</h1>
@@ -44,4 +44,4 @@ echo "</table>";
 
 ?>
 </div>
-<?php include 'footer.php'; ?>
+<?php include '/template/footer.php'; ?>

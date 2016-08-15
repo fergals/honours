@@ -1,5 +1,5 @@
 <?php
-require_once 'dbconnect.php';
+require_once '/config/dbconnect.php';
 
     $username = $_POST['username'];
     $firstname = $_POST['firstname'];

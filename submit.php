@@ -1,5 +1,5 @@
 <?php
-include 'header.php'; ?>
+include '/template/header.php'; ?>
   <form class="form-horizontal" action="submitticket.php" method="post" />
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">Query</label>

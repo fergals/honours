@@ -1,6 +1,6 @@
 <?php
-require_once 'dbconnect.php';
-include 'header.php';
+require_once '/config/dbconnect.php';
+include '/template/header.php';
 
     $userid = $_POST['commentuID'];
     $comment = $_POST['comment'];
@@ -22,4 +22,6 @@ include 'header.php';
     }
 
     $db = null;
+
+include '/template/footer.php';
 ?>
