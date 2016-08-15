@@ -18,6 +18,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $pagetitle = "HELP! Online Support System";
 
-include('config/user.php');
+include(dirname(__FILE__)."/../config/user.php");
 $user = new User($db);
 ?>

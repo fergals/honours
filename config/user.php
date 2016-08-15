@@ -20,6 +20,7 @@ class User extends Password{
 
 			return $stmt->fetch();
 
+
 		} catch(PDOException $e) {
 		    echo '<p class="bg-danger">'.$e->getMessage().'</p>';
 		}
@@ -33,10 +34,18 @@ class User extends Password{
 
 		    $_SESSION['loggedin'] = true;
 		    $_SESSION['username'] = $row['username'];
-		    $_SESSION['id'] = $row['id'];
+		    $_SESSION['id'] = $userid;
 		    return true;
 		}
 	}
+
+
+  public function getuserid(PDO $pdo, $userid){
+    $stmt = $this->_db->prepare('SELECT id FROM users WHERE username = :username');
+    $result = $stmt->execute(array(':userid' => $userid));
+    return $result->fetchFirst(PDO::FETCH_ASSOC);
+  }
+
 
 	public function logout(){
 		session_destroy();

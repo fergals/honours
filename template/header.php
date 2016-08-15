@@ -1,4 +1,4 @@
-<?php require_once '/../config/dbconnect.php'; ?>
+<?php require_once(dirname(__FILE__)."/../config/dbconnect.php"); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +23,7 @@
           <li><a href="../main.php">Home<span class="sr-only">(current)</span></a></li>
           <li><a href="../submit.php">Submit New Ticket</a></li>
           <li><a href="../knowledge.php">Knowledge Base</a></li>
+          <li><a href="#">UserID: <?php echo $_SESSION['id'] ?></a></li>
         </ul>
 
   <ul class="nav navbar-nav navbar-right">

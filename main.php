@@ -5,7 +5,8 @@ include '/template/header.php'; ?>
 <h1>Your open tickets:</h1>
 <?php
 
-$opentickets = $db->query("SELECT tID, id, date, userid, category, department FROM ticket WHERE status='Open'");
+$opentickets = $db->query("SELECT tID, id, date, userid, category, department FROM ticket WHERE userid = '$_SESSION[id]'");
+//$opentickets = $db->query("SELECT tID, id, date, userid, category, department FROM ticket WHERE status='Open'");
 echo "<table class='table table-striped'>
       <tr>
       <th>Ticket</th>

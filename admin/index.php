@@ -1,5 +1,5 @@
 <?php
-include_once '../dbconnect.php';
+include_once '../config/dbconnect.php';
 include '../template/adminheader.php'; ?>
 
 <div id="content">

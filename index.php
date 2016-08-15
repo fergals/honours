@@ -1,4 +1,4 @@
-<?php require 'config/dbconnect.php';
+<?php require_once '/config/dbconnect.php';
 
 //check if user is logged in, if so redirect to index.php
   if ($user->is_logged_in() ) {
@@ -20,7 +20,7 @@
   		$error[] = 'Wrong username or password or your account has not been activated.';
   	}
 
-  }//end if submit
+  }
 
 //Register Button
 if(isset($_POST['register'])) {

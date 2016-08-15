@@ -10,7 +10,7 @@ while ($d = $dateinc->fetch(PDO::FETCH_OBJ)){
 
 //Pulls POST data from ticket.php to insert into ticket.table
 $tID = "T" . date("dmy") . $idincrement;
-$userid = rand(1,6);
+$userid = $_SESSION['id'];
 $query = $_POST['query'];
 $date = date("Y-m-d H:i:s");
 $queue = $_POST['queue'];
@@ -41,5 +41,5 @@ else {
 
 $db = null;
 
-include 'footer.php';
+include '/template/footer.php';
  ?>
