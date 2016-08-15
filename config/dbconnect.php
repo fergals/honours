@@ -17,4 +17,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 //include ('config/phpmailer/mail.php');
 
 $pagetitle = "HELP! Online Support System";
+
+include('config/user.php');
+$user = new User($db);
 ?>

@@ -10,7 +10,7 @@
     <link href="../css/style.css" rel="stylesheet">
 </head>
 
-<div id = "indexwrapper">
+<div id = "wrapper">
 
     <div class = "boxleft">
         <h1> Login </h1>
@@ -18,7 +18,7 @@
     </div>
 
     <div class = "boxmiddle">
-      <h1> Register </h1>
+      <h1><a href="registration.php"> Register </a></h1>
       <p>Register now to submit a new ticket</p>
     </div>
 
