@@ -83,7 +83,7 @@ if(!isset($error)){
 }
 ?>
 
-<div class="contrainer">
+<div class="indexwrapper">
 
 <div class="registration col-md-10">
     <form class="form-horizontal" action="" method="post" autocomplete="off"/>
