@@ -1,4 +1,4 @@
-<?php require_once(dirname(__FILE__)."/../config/dbconnect.php")
+<?php require_once 'config/dbconnect.php';
 
 $user->logout();
 
