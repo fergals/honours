@@ -1,5 +1,4 @@
 <?php
-include_once '/config/dbconnect.php';
 include '/template/header.php'; ?>
 <div id="content">
 <h1>Edit your profile</h1>

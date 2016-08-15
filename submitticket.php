@@ -1,5 +1,4 @@
 <?php
-include '/config/dbconnect.php';
 include '/template/header.php';
 
 //Gets id from ticket.table and increments from last row

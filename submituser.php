@@ -1,5 +1,4 @@
 <?php
-require_once '/config/dbconnect.php';
 include '/template/header.php';
 
     $username = $_POST['username'];

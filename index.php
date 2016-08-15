@@ -1,3 +1,4 @@
+<?php include_once 'config/dbconnect.php' ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,26 +10,23 @@
     <link href="../css/style.css" rel="stylesheet">
 </head>
 
-<body>
-  <div class="container">
-      <div class="row">
-          <div class="col-sm-6 col-md-4 col-md-offset-4">
-              <h1 class="text-center login-title">Sign in to to view tickets</h1>
-              <div class="account-wall">
-                  <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120" alt="">
-                  <form class="form-signin">
-                    <input type="text" class="form-control" placeholder="Email" required autofocus>
-                    <input type="password" class="form-control" placeholder="Password" required>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                    <label class="checkbox pull-left">
-                    <input type="checkbox" value="remember-me">Remember me</label>
-                    <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
-                  </form>
-              </div>
-              <a href="registration.php" class="text-center new-account">Create an account </a><a href="main.php" class="text-center new-account">Main</a>
+<div id = "indexwrapper">
 
-          </div>
-      </div>
-  </div>
+    <div class = "boxleft">
+        <h1> Login </h1>
+        <p>Login to open a new ticket or view existing tickets</p>
+    </div>
+
+    <div class = "boxmiddle">
+      <h1> Register </h1>
+      <p>Register now to submit a new ticket</p>
+    </div>
+
+    <div class = "boxright">
+        <h1> Knowledgebase </h1>
+        <p>The knowledgebase contains our most frequently asked questions and answers</p>
+    </div>
+</div>
+
 </body>
 </html>

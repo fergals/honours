@@ -75,4 +75,4 @@ include '/template/header.php'; ?>
 
 </div>
 <?php
-include 'footer.php'; ?>
+include '/template/footer.php'; ?>
