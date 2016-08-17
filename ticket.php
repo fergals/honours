@@ -7,10 +7,10 @@ include '/template/header.php'; ?>
 
 <?php
  $ticketid = $_GET['id'];
- $userid = rand(1,6);
+ $userid = $_SESSION['id'];
 
  //Get User information and display on left
- $userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = '$userid'");
+ $userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = $_SESSION[id] ");
  while($u = $userinfo->fetch(PDO::FETCH_OBJ)) {
  echo '<strong>User Information</strong><br />';
  echo 'Name: ' . $u->firstname . ' ' . $u->surname . '<br />';
@@ -21,16 +21,16 @@ include '/template/header.php'; ?>
  }
 
 //Get Ticket information and display on left
-$ticketinfo = $db->query("SELECT userid, tID, date, query FROM ticket where tID = '$ticketid'");
+$ticketinfo = $db->query("SELECT userid, tID, date, queue, category, department, urgency, status FROM ticket where tID = '$ticketid'");
 while($r = $ticketinfo->fetch(PDO::FETCH_OBJ)) {
 $fullticket = $r->tID;
 echo '<strong>' . $r->tID . '</strong><br />';
-echo 'Queue: First Line<br />';
-echo 'Status: Open<br />';
-echo 'Urgency: Normal<br /><br />';
-echo 'Category: Computer Issues<br />';
-echo 'Department: Finance <br /><br />';
-echo 'Submitted: 10/10/16';
+echo 'Queue: ' . $r->queue . '<br />';
+echo 'Status: ' . $r->status . '<br />';
+echo 'Urgency: ' . $r->urgency . '<br /><br />';
+echo 'Category: ' . $r->category . '<br />';
+echo 'Department: ' . $r->department . '<br /><br />';
+echo 'Submitted: ' . $r->date;
 }
  ?>
 

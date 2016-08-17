@@ -1,5 +1,8 @@
 <?php require_once '/config/dbconnect.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+
 //check if user is logged in, if so redirect to index.php
   if ($user->is_logged_in() ) {
     header('Location: main.php');
@@ -87,7 +90,7 @@ if(!isset($error)){
                         ':usertype' => $usertype,
                         ':creationdate' => $creationdate
                       ));
-    header('Location: main.php?action=joined');
+    header('Location: index.php?action=joined');
   } catch(PDOException $e) {
     $error[] = $e->getMessage();
   }
