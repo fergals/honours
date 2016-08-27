@@ -6,10 +6,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
 <div class="row">
 <div class="col-xs-4">
 <?php
-$ticketid = $_GET['id'];
 $userid = $_SESSION['id'];
 
   //Get User information and display on left
+
+
 $userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = $_SESSION[id] ");
 while($u = $userinfo->fetch(PDO::FETCH_OBJ)) {
 echo '<strong>User Information</strong><br />';
@@ -81,13 +82,17 @@ echo 'User Type: ' . $u->usertype . '<br /><br />';
     <div class="form-group">
       <label for="category" class="col-sm-2 control-label">Category</label>
       <div class="col-sm-10">
-        <select name="category" class="form-control">
-          <option value="Computing">Computing</option>
-          <option value="Money Issues">Money Issues</option>
-        </select>
+        <?php
+        $getcategories = $db->query("SELECT category FROM categories");
+        echo "<select name='category' class='form-control'>";
+        while($gc = $getcategories->fetch(PDO::FETCH_ASSOC)){
+          echo "<option value=" . $gc['category'] . ">" . $gc['category'] . "</option>";
+        }
+        echo "</select>";
+        $db = null;
+        ?>
       </div>
     </div>
-
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

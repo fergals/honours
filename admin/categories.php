@@ -20,11 +20,12 @@ $userid = $_SESSION['id'];
 
 <h2>Edit Categories</h2>
 <?php
-$editcat = $db->query("SELECT ALL category FROM categories");
-while ($e = $editcat->fetch(PDO::FETCH_ASSOC)){
-echo "<select multiple class='form-control'><option>" . $ec['category'] . "</option></select>";
+$editcat = $db->query("SELECT category FROM categories ORDER BY category");
+echo "<select multiple class='form-control'>";
+while ($ec = $editcat->fetch(PDO::FETCH_ASSOC)){
+echo "<option>" . $ec['category'] . "</option>";
 }
-
+echo "</select>";
 ?>
 </div>
 <?php include '../template/adminfooter.php'; ?>
