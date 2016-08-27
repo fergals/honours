@@ -1,6 +1,6 @@
 <?php
-include '../dbconnect.php';
-include '../template/adminheader.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 
 //Gets id from ticket.table and increments from last row
 $dateinc = $db->query("SELECT id FROM ticket ORDER BY ID DESC LIMIT 1");

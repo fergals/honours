@@ -1,5 +1,5 @@
 <?php
-include '/template/header.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
 
 //Gets id from ticket.table and increments from last row
 $dateinc = $db->query("SELECT id FROM ticket ORDER BY ID DESC LIMIT 1");
@@ -39,7 +39,7 @@ else {
   echo "Error submitting ticket to database- <a href='index.php'>Go Back</a>";
 }
 
-$db = null;
+$stmt = null;
 
-include '/template/footer.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php');
  ?>

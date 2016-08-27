@@ -1,5 +1,6 @@
 <?php
-include '../header.php'; ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');?>
 <strong>Users should be displayed here</strong><hr />
 
 <strong>Add User</strong><br /><br />

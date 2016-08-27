@@ -1,6 +1,6 @@
 <?php
-include '../template/adminheader.php';
-require_once '../config/dbconnect.php' ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
 
 <div class="container">
 <div class="row">

@@ -1,7 +1,7 @@
 <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/style.css" rel="stylesheet">
 
-<?php require 'config/dbconnect.php';
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 
 //check if user is logged in, if so redirect to index.php
   if ($user->is_logged_in() ) {

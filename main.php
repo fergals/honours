@@ -1,5 +1,5 @@
 <?php
-include '/template/header.php'; ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php'); ?>
 
 <div id="content">
 <?php
@@ -13,18 +13,18 @@ if(count($opentickets) > 0) {
         <th>Date Submitted</th>
         <th>Category</th>
         <th>Department</th></tr>";
-  $o = $opentickets->fetch(PDO::FETCH_ASSOC);
-  echo "<tr><td><a href='ticket.php?id=" . $o['tID'] . "'>" . $o['tID'] ."</td>";
-  echo "<td>" . $o['date'] . "</td>";
-  echo "<td>" . $o['category'] . "</td>";
-  echo "<td>" . $o['department'] . "</td></tr>";
-  echo "</table>";
+        while($o = $opentickets->fetch(PDO::FETCH_ASSOC)){
+        echo "<tr><td><a href='ticket.php?id=" . $o['tID'] . "'>" . $o['tID'] ."</td>";
+        echo "<td>" . $o['date'] . "</td>";
+        echo "<td>" . $o['category'] . "</td>";
+        echo "<td>" . $o['department'] . "</td></tr>";
+      }
+      echo "</table>";
+      echo "<br /><hr /><br />";
 }
-  else
-  {
-    echo "<h2>You have no open tickets</h2>";
-  }
 
+//NEED TO ADD IF STATEMENT for no open tickets!
+//echo "<h2>You have no open tickets</h2>";
 
 $closedtickets = $db->query("SELECT tID, id, date, userid, category, department FROM ticket WHERE userid = '$_SESSION[id]' AND status='closed'");
 
@@ -37,7 +37,7 @@ echo "<table class='table table-striped'>
       <th>Category</th>
       <th>Department</th>
       <th>Date Closed</th></tr>";
-$c = $closedtickets->fetch(PDO::FETCH_ASSOC);
+while($c = $closedtickets->fetch(PDO::FETCH_ASSOC)){
   echo "<tr><td><a href='ticket.php?id=" . $c['tID'] . "'>" . $c['tID'] ."</td>";
   echo "<td>" . $c['date'] . "</td>";
   echo "<td>" . $c['category'] . "</td>";
@@ -45,11 +45,8 @@ $c = $closedtickets->fetch(PDO::FETCH_ASSOC);
   echo "<td>Date Closed not in SQL</td></tr>";
   echo "</table>";
 }
-else {
-  echo "<br /><br /><br /><br /><br /><br /><br /><br /><br /><hr />";
-  echo "<h2>You have no closed tickets</h2>";
 }
 
 ?>
 </div>
-<?php include '/template/footer.php'; ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php'); ?>

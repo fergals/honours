@@ -1,10 +1,10 @@
 <?php
-include '/template/header.php'; ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');?>
 <div id="content">
 <h1>Edit your profile</h1>
 
 <?php
-$loadprofile = $db->query("SELECT username, firstname, surname, password, email, phonenumber, department, usertype FROM users WHERE id = 1");
+$loadprofile = $db->query("SELECT username, firstname, surname, password, email, phonenumber, department, usertype FROM users WHERE id = $_SESSION[id]");
 
       echo "<form class='form-horizontal' action='sprofile.php' method='post' />";
       echo "<div class='form-group'>
@@ -35,4 +35,4 @@ $loadprofile = $db->query("SELECT username, firstname, surname, password, email,
 
 </div>
 <?php
-include '/template/footer.php'; ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php'); ?>

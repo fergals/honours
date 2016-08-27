@@ -1,5 +1,5 @@
 <?php
-include '/template/header.php'; ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php'); ?>
 
 <div class="container">
 <div class="row">
@@ -77,4 +77,4 @@ echo 'Submitted: ' . $r->date;
 
 </div>
 
-<?php include '/template/footer.php'; ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php'); ?>

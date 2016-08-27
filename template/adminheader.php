@@ -1,3 +1,6 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,6 +23,7 @@
         <ul class="nav navbar-nav">
           <li><a href="../admin/index.php">Home<span class="sr-only">(current)</span></a></li>
           <li><a href="../admin/newticket.php">Add Ticket</a></li>
+          <li><a href="../admin/categories.php">Categories</a></li>
         </ul>
 
   <ul class="nav navbar-nav navbar-right">

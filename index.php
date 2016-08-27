@@ -1,4 +1,6 @@
-<?php require_once '/config/dbconnect.php';
+<?php
+//require_once '/config/dbconnect.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');

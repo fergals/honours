@@ -1,5 +1,29 @@
 <?php
-include '../template/adminheader.php'; ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
+
+<div class="container">
+<div class="row">
+<div class="col-xs-4">
+<?php
+$ticketid = $_GET['id'];
+$userid = $_SESSION['id'];
+
+  //Get User information and display on left
+$userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = $_SESSION[id] ");
+while($u = $userinfo->fetch(PDO::FETCH_OBJ)) {
+echo '<strong>User Information</strong><br />';
+echo 'Name: ' . $u->firstname . ' ' . $u->surname . '<br />';
+echo 'E-mail: ' . $u->email . '<br />';
+echo 'Telephone: ' . $u->phonenumber .'<br />';
+echo 'Department: ' . $u->department . '<br />';
+echo 'User Type: ' . $u->usertype . '<br /><br />';
+  }
+?>
+</div>
+
+<div class="col-xs-6">
+
   <form class="form-horizontal" action="submitticket.php" method="post" />
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">Query</label>
@@ -71,8 +95,8 @@ include '../template/adminheader.php'; ?>
       </div>
     </div>
   </form>
-
-
+</div>
+</div>
 </div>
 <?php
 include '../template/adminfooter.php'; ?>

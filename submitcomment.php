@@ -1,5 +1,5 @@
 <?php
-include '/template/header.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
 
     $userid = $_POST['commentuID'];
     $comment = $_POST['comment'];
@@ -22,5 +22,5 @@ include '/template/header.php';
 
     $db = null;
 
-include '/template/footer.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php');
 ?>

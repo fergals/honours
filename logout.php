@@ -1,4 +1,4 @@
-<?php require_once 'config/dbconnect.php';
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 
 $user->logout();
 

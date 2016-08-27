@@ -1,5 +1,5 @@
 <?php
-include '/template/header.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
 
     $username = $_POST['username'];
     $firstname = $_POST['firstname'];
@@ -33,5 +33,6 @@ include '/template/header.php';
     }
 
     $db = null;
-include '/template/footer.php'
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php');
 ?>

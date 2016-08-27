@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 date_default_timezone_set('Europe/London');
 
@@ -13,7 +12,8 @@ $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $pagetitle = "HELP! Online Support System";
 
-include(dirname(__FILE__)."/../config/user.php");
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/user.php');
 //include ('config/phpmailer/mail.php');
 $user = new User($db);
 ?>
