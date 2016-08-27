@@ -34,7 +34,7 @@ class User extends Password{
 
 		    $_SESSION['loggedin'] = true;
 		    $_SESSION['username'] = $row['username'];
-		    $_SESSION['id'] = $userid;
+		    $_SESSION['id'] = $row['id'];
 		    return true;
 		}
 	}

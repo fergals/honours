@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="../main.php">Home<span class="sr-only">(current)</span></a></li>
-          <li><a href="../submit.php">Submit New Ticket</a></li>
+          <li><a href="../newticket.php">Submit New Ticket</a></li>
           <li><a href="../knowledge.php">Knowledge Base</a></li>
           <li><a href="#">UserID: <?php echo $_SESSION['id'] ?></a></li>
         </ul>
