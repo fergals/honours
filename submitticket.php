@@ -13,11 +13,11 @@ $tID = "T" . date("dmy") . $idincrement;
 $userid = $_SESSION['id'];
 $query = $_POST['query'];
 $date = date("Y-m-d H:i:s");
-$queue = $_POST['queue'];
-$status = $_POST['status'];
-$urgency = $_POST['urgency'];
-$department = $_POST['department'];
-$category = $_POST['category'];
+$queue = "1stline";
+$status = "Open";
+$urgency = "low";
+$department = "None";
+$category = "None";
 
 $stmt = $db->prepare("INSERT INTO ticket (tID, userid, query, date, queue, status, urgency, department, category) VALUES (:tID, :userid, :query, :date, :queue, :status, :urgency, :department, :category)");
 $dateinc = $db->query("SELECT id FROM ticket ORDER BY ID DESC LIMIT 1");

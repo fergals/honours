@@ -23,7 +23,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
         <ul class="nav navbar-nav">
           <li><a href="../admin/index.php">Home<span class="sr-only">(current)</span></a></li>
           <li><a href="../admin/newticket.php">Add Ticket</a></li>
+          <li><a href="../admin/queues.php">Queues</a></li>
           <li><a href="../admin/categories.php">Categories</a></li>
+          <li><a href="../admin/kb.php">KnowledgeBase</a></li>
         </ul>
 
   <ul class="nav navbar-nav navbar-right">
