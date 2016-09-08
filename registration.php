@@ -56,7 +56,7 @@
 if(!isset($error)){
   //hash password
   $hashpassword = $user->password_hash($_POST['password1'], PASSWORD_BCRYPT);
-  $department = "NONE";
+  $department = "Student";
   $usertype = "Registered";
   $creationdate = date("Y-m-d H:i:s");
 

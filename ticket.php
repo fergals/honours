@@ -9,25 +9,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php'); ?>
  $ticketid = $_GET['id'];
  $userid = $_SESSION['id'];
 
- //Get User information and display on left
- $userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = $_SESSION[id] ");
- while($u = $userinfo->fetch(PDO::FETCH_OBJ)) {
- echo '<strong>User Information</strong><br />';
- echo 'Name: ' . $u->firstname . ' ' . $u->surname . '<br />';
- echo 'E-mail: ' . $u->email . '<br />';
- echo 'Telephone: ' . $u->phonenumber .'<br />';
- echo 'Department: ' . $u->department . '<br />';
- echo 'User Type: ' . $u->usertype . '<br /><br />';
- }
-
 //Get Ticket information and display on left
 $ticketinfo = $db->query("SELECT userid, tID, date, queue, category, department, urgency, status FROM ticket where tID = '$ticketid'");
 while($r = $ticketinfo->fetch(PDO::FETCH_OBJ)) {
 $fullticket = $r->tID;
-echo '<strong>' . $r->tID . '</strong><br />';
-echo 'Queue: ' . $r->queue . '<br />';
+echo '<strong>' . $r->tID . '</strong><br /><br />';
 echo 'Status: ' . $r->status . '<br />';
-echo 'Urgency: ' . $r->urgency . '<br /><br />';
 echo 'Category: ' . $r->category . '<br />';
 echo 'Department: ' . $r->department . '<br /><br />';
 echo 'Submitted: ' . $r->date;
@@ -43,9 +30,9 @@ echo 'Submitted: ' . $r->date;
       echo $r->query . '<br /><br /><hr />';
     }
 
-   $comments = $db->query("SELECT comment, date FROM comments where tID = '$fullticket'");
+  $comments = $db->query("SELECT comment, date FROM comments where tID = '$fullticket'");
     while($c = $comments->fetch(PDO::FETCH_OBJ)) {
-      echo $c->comment . ' @ ' . $c->date .'<br /><br />';
+      echo $c->comment . '<br />' . $c->date . '<br /><br />';
     }
 ?>
 
@@ -63,12 +50,6 @@ echo 'Submitted: ' . $r->date;
            echo "<input type='hidden' name='commentuID' value='" . $userid . "'>";;
         }
          ?>
-         <div class="checkbox">
-           <label>
-             <input type="checkbox" name='hidden' value='true'> Hide comment from user
-           </label>
-         </div>
-
         <button type='submit' class='btn btn-default'>Submit</button>
       </form>
     </div>
