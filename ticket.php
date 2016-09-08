@@ -30,7 +30,7 @@ echo 'Submitted: ' . $r->date;
       echo $r->query . '<br /><br /><hr />';
     }
 
-  $comments = $db->query("SELECT comment, date FROM comments where tID = '$fullticket'");
+  $comments = $db->query("SELECT comment, date FROM comments where tID = '$fullticket' AND hidden='NO'");
     while($c = $comments->fetch(PDO::FETCH_OBJ)) {
       echo $c->comment . '<br />' . $c->date . '<br /><br />';
     }
