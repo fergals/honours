@@ -73,52 +73,73 @@ if(isset($_POST['register'])) {
 if(!isset($error)){
   //hash password
   $hashpassword = $user->password_hash($_POST['password1'], PASSWORD_BCRYPT);
+
+  //create activatasion code
+	$activasion = md5(uniqid(rand(),true));
   $department = "NONE";
   $usertype = "Registered";
   $creationdate = date("Y-m-d H:i:s");
 
   try {
 
-    $stmt = $db->prepare('INSERT INTO users (username, firstname, surname, dateofbirth, password, email, phonenumber, department, usertype, creationdate) VALUES (:username, :firstname, :surname, :dateofbirth, :password, :email, :phonenumber, :department, :usertype, :creationdate)');
+    $stmt = $db->prepare('INSERT INTO users (username, firstname, surname, dateofbirth, password, email, phonenumber, department, usertype, creationdate, active) VALUES (:username, :firstname, :surname, :dateofbirth, :password, :email, :phonenumber, :department, :usertype, :creationdate, :active)');
     $stmt->execute(array(
-                        ':username' => $_POST['username'],
-                        ':firstname' => $_POST['firstname'],
-                        ':surname' => $_POST['surname'],
-                        ':password' => $hashpassword,
-                        ':dateofbirth' => $_POST['dateofbirth'],
-                        ':email' => $_POST['email'],
-                        ':phonenumber' => $_POST['phonenumber'],
-                        ':department' => $department,
-                        ':usertype' => $usertype,
-                        ':creationdate' => $creationdate
-                      ));
-    header('Location: index.php?action=joined');
-  } catch(PDOException $e) {
-    $error[] = $e->getMessage();
-  }
-}
+                          ':username' => $_POST['username'],
+                          ':firstname' => $_POST['firstname'],
+                          ':surname' => $_POST['surname'],
+                          ':password' => $hashpassword,
+                          ':dateofbirth' => $_POST['dateofbirth'],
+                          ':email' => $_POST['email'],
+                          ':phonenumber' => $_POST['phonenumber'],
+                          ':department' => $department,
+                          ':usertype' => $usertype,
+                          ':creationdate' => $creationdate,
+                          ':active' => $activasion ));
+			$id = $db->lastInsertId('id');
+			//send email
+			$to = $_POST['email'];
+			$subject = "Registration Confirmation";
+			$body = "<p>Thank you for registering at HELP! Online Support System</p>
+			<p>To activate your account, please click on this link: <a href='".DIR."activate.php?x=$id&y=$activasion'>".DIR."activate.php?x=$id&y=$activasion</a></p>";
+
+			$mail = new Mail();
+			$mail->setFrom(SITEEMAIL);
+			$mail->addAddress($to);
+			$mail->subject($subject);
+			$mail->body($body);
+			$mail->send();
+
+			//redirect to index page
+			header('Location: index.php?action=joined');
+			exit;
+
+		//else catch the exception and show the error.
+		} catch(PDOException $e) {
+		    $error[] = $e->getMessage();
+		}
+	}
 }
 ?>
-<div class="indexwrapper">
 
+<div class="indexwrapper">
+  <div id="content">
+    <?php
+      // check for errors
+      if(isset($error)){
+        foreach($error as $error){
+          echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
+        }
+      }
+
+      //if successfull
+      if(isset($_GET['action']) && $_GET['action'] == 'joined'){
+        echo "<div class='alert alert-success' role='alert'>Successfully registered</div>";
+      }
+
+     ?>
 <div class="registration col-md-10">
     <form class="form-horizontal" action="" method="post" autocomplete="off"/>
       <div class="form-group">
-      <?php
-        // check for errors
-        if(isset($error)){
-          foreach($error as $error){
-            echo '<p class="bg-danger">' . $error . '</p>';
-          }
-        }
-
-        //if successfull
-        if(isset($_GET['action']) && $_GET['action'] == 'joined'){
-          echo "<h2 class='bg-success'>Registration Successful</h2>";
-        }
-
-       ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +147,7 @@ if(!isset($error)){
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bootstrap Login &amp; Register Templates</title>
+        <title><?php echo $pagetitle; ?></title>
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/assets/font-awesome/css/font-awesome.min.css">

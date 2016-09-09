@@ -12,8 +12,12 @@ $db = new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $pagetitle = "HELP! Online Support System";
 
+//define website details
+define('DIR','http://help.fergalsexton.com/');
+define('SITEMAIL', 'noreply@fergalsexton.com');
+
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/user.php');
-//include ('config/phpmailer/mail.php');
+include ('config/phpmailer/mail.php');
 $user = new User($db);
 ?>
