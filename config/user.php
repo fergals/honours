@@ -56,8 +56,5 @@ class User extends Password{
 			return true;
 		}
 	}
-
 }
-
-
 ?>

@@ -34,6 +34,7 @@ $stmt->bindParam(':category', $category, PDO::PARAM_STR, 10000);
 
 if($stmt->execute()) {
   echo "Successfully added ticket - <a href='index.php'>Go Back</a>";
+  echo $date;
 }
 else {
   echo "Error submitting ticket to database- <a href='index.php'>Go Back</a>";
