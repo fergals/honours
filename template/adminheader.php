@@ -26,9 +26,10 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
           <li><a href="../admin/index.php">Home<span class="sr-only">(current)</span></a></li>
           <li><a href="../admin/newticket.php">Add Ticket</a></li>
           <li><a href="../admin/queues.php">Queues</a></li>
-          <li><a href="../admin/categories.php">Categories</a></li>
+          <li><a href="../admin/categories.php">Categories/Departments</a></li>
           <li><a href="../admin/kb.php">KnowledgeBase</a></li>
         </ul>
+
 
   <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
@@ -42,6 +43,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
       <li><a href="../logout.php">Logout</a>
     </li>
   </ul>
+  <form class="navbar-form">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search Tickets">
+          </div>
+        </form>
 </div>
     </div>
   </nav>

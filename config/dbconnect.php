@@ -18,6 +18,6 @@ define('SITEMAIL', 'noreply@fergalsexton.com');
 
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/user.php');
-include ('config/phpmailer/mail.php');
+include ($_SERVER['DOCUMENT_ROOT'].'/config/phpmailer/mail.php');
 $user = new User($db);
 ?>
