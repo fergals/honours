@@ -15,7 +15,7 @@ $query = $_POST['query'];
 $date = date("Y-m-d H:i:s");
 $queue = "1stline";
 $status = "Open";
-$urgency = "low";
+$urgency = "Low";
 $department = "None";
 $category = "None";
 

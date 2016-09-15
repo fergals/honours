@@ -27,6 +27,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
           <li><a href="../admin/newticket.php">Add Ticket</a></li>
           <li><a href="../admin/queues.php">Queues</a></li>
           <li><a href="../admin/categories.php">Categories/Departments</a></li>
+          <li><a href="../admin/users.php">User Management</a></li>
           <li><a href="../admin/kb.php">KnowledgeBase</a></li>
         </ul>
 

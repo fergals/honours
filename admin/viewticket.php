@@ -1,6 +1,5 @@
 <?php
 
-//<input type='text' class='form-control' name='' placeholder=''>
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
 
@@ -9,12 +8,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
 <div class="col-xs-4">
 
 <?php
-// if(isset($_POST['emailticket'] $$ )) {
-// $formaction = 'submitcomment.php';
-// }
-// else {
-//   $formaction = 'submitcomment.php';
-// }
 
  $ticketid = $_GET['id'];
  $userid = $_SESSION['id'];
@@ -28,28 +21,81 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
    echo "<input type='text' name='email' class='auto' placeholder='" . $u->email . "'readonly><br />";
    echo "<input type='text' placeholder='" . $u->phonenumber . "'readonly><br />";
    echo "<input type='text' placeholder='" . $u->department . "'readonly><br />";
-   echo "<input type='text' placeholder='" . $u->usertype . "'readonly><br /><br /></form>";
+   echo "<input type='text' placeholder='" . $u->usertype . "'readonly><br /><br />";
+
+   //Get Ticket information and display on left
+   $ticketinfo = $db->query("SELECT userid, tID, date, queue, category, department, urgency, status FROM ticket where tID = '$ticketid'");
+   while($r = $ticketinfo->fetch(PDO::FETCH_OBJ)) {
+     $fullticket = $r->tID;
+     echo "<strong>" . $r->tID . " </strong>(" . $r->date . ")<br />";
+
+     // Get QUEUES from DB
+     $stmt = $db->prepare("SELECT qname FROM queues");
+     $stmt->execute();
+     echo "<select name='queue' style='width: 174px'>";
+     echo "<option value='" . $r->queue . "' selected>" . $r->queue . "</option>";
+     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+     echo "<option value='" . $row['qname'] . "'>" . $row['qname'] ."</option>";
+     }
+     echo "</select><br />";
+
+     //Get STATUS from DB
+     $stmt = $db->prepare("SELECT status FROM status");
+     $stmt->execute();
+     echo "<select name='status' style='width: 174px'>";
+     echo "<option value='" . $r->status . "' selected>" . $r->status . "</option>";
+     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+     echo "<option value='" . $row['status'] . "'>" . $row['status'] ."</option>";
+     }
+     echo "</select><br />";
+
+     //Get URGENCY from DB
+     $stmt = $db->prepare("SELECT urgency FROM urgency");
+     $stmt->execute();
+     echo "<select name='urgency' style='width: 174px'>";
+     echo "<option value='" . $r->urgency . "' selected>" . $r->urgency . "</option>";
+     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+     echo "<option value='" . $row['urgency'] . "'>" . $row['urgency'] ."</option>";
+     }
+     echo "</select><br />";
+
+     //Populate categories dropdown from DB
+     $getcategories = $db->query("SELECT category FROM categories");
+     echo "<select name='category' style='width: 174px;'>";
+     echo "<option value='" . $r->category . "' selected>" . $r->category . "</option>";
+     while($gc = $getcategories->fetch(PDO::FETCH_ASSOC)){
+       echo "<option value=" . $gc['category'] . ">" . $gc['category'] . "</option>";
+     }
+     echo "</select><br />";
+
+     //Populate DEPARTMENT dropdown from DB
+     $getdepartment = $db->query("SELECT department FROM departments");
+     echo "<select name='department' style='width: 174px;'>";
+     echo "<option value='" . $r->department . "' selected>" . $r->department . "</option>";
+     while($dp = $getdepartment->fetch(PDO::FETCH_ASSOC)){
+       echo "<option value=" . $dp['department'] . ">" . $dp['department'] . "</option>";
+     }
+     echo "</select><br /><br />";
+     echo "<button class='btn btn-default' name='updateticket' id='updateticket'>Update Ticket Details</button></form";
+    }
  }
 
-//Get Ticket information and display on left
-  $ticketinfo = $db->query("SELECT userid, tID, date, queue, category, department, urgency, status FROM ticket where tID = '$ticketid'");
-  while($r = $ticketinfo->fetch(PDO::FETCH_OBJ)) {
-    $fullticket = $r->tID;echo "<strong>" . $r->tID . "</strong><br />";
-    echo "<input type='text' placeholder='" . $r->queue . "'><br />";
-    echo "<input type='text' placeholder='" . $r->status . "'><br />";
-    echo "<input type='text' placeholder='" . $r->urgency . "'><br />";
+ if(isset($_POST['updateticket'])) {
 
-    $getcategories = $db->query("SELECT category FROM categories");
-    echo "<select name='category' style='width: 174px;'>";
-    while($gc = $getcategories->fetch(PDO::FETCH_ASSOC)){
-      echo "<option value=" . $gc['category'] . ">" . $gc['category'] . "</option>";
-    }
-    echo "</select><br />";
-    //echo "<input type='text' placeholder='" . $r->category . "'><br />";
-    echo "<input type='text' placeholder='" . $r->department . "'><br />";
-    echo "<input type='text' placeholder='" . $r->date . "'><br /><br />";
-    echo "<button type='submit' class='btn btn-default' name='newcat' id='newcat'>Update Ticket Details</button>";
-}
+   $queue = $_POST['queue'];
+   $status = $_POST['status'];
+   $urgency = $_POST['urgency'];
+   $category = $_POST['category'];
+   $department = $_POST['department'];
+   $stmt = $db->prepare('UPDATE ticket SET queue=:queue, status=:status, urgency=:urgency, category=:category, department=:department WHERE tid = :ticketid');
+   $stmt->bindParam(':queue', $queue, PDO::PARAM_STR,100);
+   $stmt->bindParam(':status', $status, PDO::PARAM_STR,100);
+   $stmt->bindParam(':urgency', $urgency, PDO::PARAM_STR,100);
+   $stmt->bindParam(':category', $category, PDO::PARAM_STR,100);
+   $stmt->bindParam(':department', $department, PDO::PARAM_STR,100);
+   $stmt->bindParam(':ticketid', $ticketid, PDO::PARAM_STR,100);
+   $stmt->execute();
+ }
 
 if(isset($_POST['submitcomment'])) {
     $userid = $_POST['commentuID'];
@@ -74,12 +120,8 @@ if(isset($_POST['submitcomment'])) {
     $stmt->execute();
   }
 
-  else if(isset($_POST['sendemail'])) {
-    header('Location: emailticket.php?id=' . $ticketid);
-  }
  ?>
-
-
+</div>
 </div>
 
   <div class="col-xs-6">
@@ -131,7 +173,6 @@ if(isset($_POST['submitcomment'])) {
     </div>
 </div>
 </div>
-
 </div>
 
 <?php include '../template/footer.php'; ?>
