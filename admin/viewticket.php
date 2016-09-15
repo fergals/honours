@@ -76,8 +76,20 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
        echo "<option value=" . $dp['department'] . ">" . $dp['department'] . "</option>";
      }
      echo "</select><br /><br />";
-     echo "<button class='btn btn-default' name='updateticket' id='updateticket'>Update Ticket Details</button></form";
     }
+
+    //Populate users dropdown from DB
+    $getusers = $db->query("SELECT id, firstname, surname FROM users");
+    $getassigned = $db->query("SELECT users.firstname, users.surname, users.id, ticket.tID, ticket.assigned FROM users INNER JOIN ticket ON users.id=ticket.assigned WHERE ticket.tID = '$fullticket'");
+    while($ga = $getassigned->fetch(PDO::FETCH_ASSOC)){
+    echo "<select name='assign' style='width: 174px;'>";
+    echo "<option value='" . $ga['id'] . "' selected>" . $ga['firstname'] . " " . $ga['surname'] . "</option>";
+    while($gu = $getusers->fetch(PDO::FETCH_ASSOC)){
+      echo "<option value=" . $gu['id'] . ">" . $gu['firstname'] . " " . $gu['surname'] . "</option>";
+    }
+    echo "</select><br /><br />";
+    echo "<button class='btn btn-default' name='updateticket' id='updateticket'>Update Ticket Details</button></form";
+   }
  }
 
  if(isset($_POST['updateticket'])) {
@@ -87,13 +99,16 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
    $urgency = $_POST['urgency'];
    $category = $_POST['category'];
    $department = $_POST['department'];
-   $stmt = $db->prepare('UPDATE ticket SET queue=:queue, status=:status, urgency=:urgency, category=:category, department=:department WHERE tid = :ticketid');
+   $assign = $_POST['assign'];
+   $stmt = $db->prepare('UPDATE ticket SET queue=:queue, status=:status, urgency=:urgency, category=:category, department=:department, assigned=:assign WHERE tid = :ticketid');
    $stmt->bindParam(':queue', $queue, PDO::PARAM_STR,100);
    $stmt->bindParam(':status', $status, PDO::PARAM_STR,100);
    $stmt->bindParam(':urgency', $urgency, PDO::PARAM_STR,100);
    $stmt->bindParam(':category', $category, PDO::PARAM_STR,100);
    $stmt->bindParam(':department', $department, PDO::PARAM_STR,100);
    $stmt->bindParam(':ticketid', $ticketid, PDO::PARAM_STR,100);
+   $stmt->bindParam(':assign', $assign, PDO::PARAM_STR,100);
+
    $stmt->execute();
  }
 

@@ -13,15 +13,16 @@ if(isset($_POST['deleteselected'])){
   echo "<div class='alert alert-success' role='alert'>Successfully deleted users</div>";
 }
 
-$users = $db->query("SELECT id, username, firstname, surname, department FROM users");
+$users = $db->query("SELECT id, username, firstname, surname, department, usertype FROM users");
 echo "<h2>Users</h2>";
 echo "<form action='' method='post'>";
-echo "<table class='table table-striped'><tr><th>Name</th><th>Username</th><th>Department</th><th>Edit User</th><th>Delete User</th>
+echo "<table class='table table-striped'><tr><th>Name</th><th>Username</th><th>Department</th><th>User Type</th><th>Edit User</th><th>Delete User</th>
 </td>";
 while($u = $users->fetch(PDO::FETCH_ASSOC)){
   echo "<tr><td>" . $u['firstname'] . " " . $u['surname'] . "</td>";
   echo "<td>" . $u['username'] . "</td>";
   echo "<td>" . $u['department'] . "</td>";
+  echo "<td>" . $u['usertype'] . "</td>";
   echo "<td><a href='useredit.php?id=" . $u['id'] ."'>Edit</a></td>";
   echo "<td><input type='checkbox' name='checkedid[]' value='" . $u['id'] . "'></td></tr>";
 
