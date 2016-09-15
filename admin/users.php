@@ -1,70 +1,37 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');?>
-<strong>Users should be displayed here</strong><hr />
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
 
-<strong>Add User</strong><br /><br />
-<form action="submituser.php" method="post" />
-
-<div class="form-group">
-  <label>Username</label>
-  <input type="text" class="form-control" name="username">
-</div>
-
-<div class="form-group">
-  <label>Firstname</label>
-  <input type="text" class="form-control" name="firstname">
-</div>
-
-<div class="form-group">
-  <label>Surname</label>
-  <input type="text" class="form-control" name="surname">
-</div>
-
-<div class="form-group">
-  <label>Password</label>
-  <input type="text" class="form-control" name="password">
-</div>
-
-<div class="form-group">
-  <label>Email Address</label>
-  <input type="text" class="form-control" name="email">
-</div>
-
-<div class="form-group">
-  <label>Telephone Number</label>
-  <input type="text" class="form-control" name="phonenumber">
-</div>
-
-<div class="form-group">
-  <label>Date of Birth</label>
-  <input type="date" class="form-control" name="dateofbirth">
-</div>
-
-<div class="form-group">
-  <label>Department</label>
-  <select name="department" class="form-control">
-    <option value="Accounts">Accounts</option>
-    <option value="Admissions">Admissions</option>
-    <option value="Computing">Computing</option>
-    <option value="Finance">Finance</option>
-    <option value="Marketing">Marketing</option>
-    <option value="Student">Student Issues</option>
-  </select>
-</div>
-
-<div class="form-group">
-  <label>User Type</label>
-  <select name="usertype" class="form-control">
-    <option value="Admin">Administrator</option>
-    <option value="Manager">Manager</option>
-    <option value="Operator">Operator</option>
-    <option value="Registered">Registered User</option>
-  </select>
-</div>
-<button type="submit" class="btn btn-default">Submit</button>
-</form>
-
-</div>
+<div id="content">
 <?php
-include '../footer.php'; ?>
+
+if(isset($_POST['deleteselected'])){
+  $idArr = $_POST['checkedid'];
+  foreach($idArr as $id){
+    $stmt = $db->query("DELETE FROM users WHERE id= $id");
+  }
+  echo "<div class='alert alert-success' role='alert'>Successfully deleted users</div>";
+}
+
+$users = $db->query("SELECT id, username, firstname, surname, department FROM users");
+echo "<h2>Users</h2>";
+echo "<form action='' method='post'>";
+echo "<table class='table table-striped'><tr><th>Name</th><th>Username</th><th>Department</th><th>Edit User</th><th>Delete User</th>
+</td>";
+while($u = $users->fetch(PDO::FETCH_ASSOC)){
+  echo "<tr><td>" . $u['firstname'] . " " . $u['surname'] . "</td>";
+  echo "<td>" . $u['username'] . "</td>";
+  echo "<td>" . $u['department'] . "</td>";
+  echo "<td><a href='useredit.php?id=" . $u['id'] ."'>Edit</a></td>";
+  echo "<td><input type='checkbox' name='checkedid[]' value='" . $u['id'] . "'></td></tr>";
+
+}
+echo "</table>";
+echo "<button type='submit' class='btn btn-default' name='deleteselected'>Delete Selected</button></form>";
+
+?>
+</div>
+
+
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminfooter.php'); ?>
