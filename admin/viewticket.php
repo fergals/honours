@@ -3,14 +3,38 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
 
-<div class="container">
-<div class="row">
-<div class="col-xs-4">
-
 <?php
 
- $ticketid = $_GET['id'];
- $userid = $_SESSION['id'];
+$ticketid = $_GET['id'];
+$userid = $_SESSION['id'];
+
+echo "<div class='container'>";
+echo "<div class='row'>";
+
+if(isset($_POST['updateticket'])) {
+
+  $queue = $_POST['queue'];
+  $status = $_POST['status'];
+  $urgency = $_POST['urgency'];
+  $category = $_POST['category'];
+  $department = $_POST['department'];
+  $assign = $_POST['assign'];
+  $stmt = $db->prepare('UPDATE ticket SET queue=:queue, status=:status, urgency=:urgency, category=:category, department=:department, assigned=:assign WHERE tid = :ticketid');
+  $stmt->bindParam(':queue', $queue, PDO::PARAM_STR,100);
+  $stmt->bindParam(':status', $status, PDO::PARAM_STR,100);
+  $stmt->bindParam(':urgency', $urgency, PDO::PARAM_STR,100);
+  $stmt->bindParam(':category', $category, PDO::PARAM_STR,100);
+  $stmt->bindParam(':department', $department, PDO::PARAM_STR,100);
+  $stmt->bindParam(':ticketid', $ticketid, PDO::PARAM_STR,100);
+  $stmt->bindParam(':assign', $assign, PDO::PARAM_STR,100);
+
+  $stmt->execute();
+  echo "<div class='alert alert-success' role='alert'>Successfully updated ticket</div>";
+}
+echo "<div class='col-xs-4'>";
+
+
+
 
  //Get User information and display on left
  $userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = $_SESSION[id] ");
@@ -91,27 +115,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
     echo "<button class='btn btn-default' name='updateticket' id='updateticket'>Update Ticket Details</button></form";
    }
  }
-
- if(isset($_POST['updateticket'])) {
-
-   $queue = $_POST['queue'];
-   $status = $_POST['status'];
-   $urgency = $_POST['urgency'];
-   $category = $_POST['category'];
-   $department = $_POST['department'];
-   $assign = $_POST['assign'];
-   $stmt = $db->prepare('UPDATE ticket SET queue=:queue, status=:status, urgency=:urgency, category=:category, department=:department, assigned=:assign WHERE tid = :ticketid');
-   $stmt->bindParam(':queue', $queue, PDO::PARAM_STR,100);
-   $stmt->bindParam(':status', $status, PDO::PARAM_STR,100);
-   $stmt->bindParam(':urgency', $urgency, PDO::PARAM_STR,100);
-   $stmt->bindParam(':category', $category, PDO::PARAM_STR,100);
-   $stmt->bindParam(':department', $department, PDO::PARAM_STR,100);
-   $stmt->bindParam(':ticketid', $ticketid, PDO::PARAM_STR,100);
-   $stmt->bindParam(':assign', $assign, PDO::PARAM_STR,100);
-
-   $stmt->execute();
- }
-
 if(isset($_POST['submitcomment'])) {
     $userid = $_POST['commentuID'];
     $comment = $_POST['comment'];
