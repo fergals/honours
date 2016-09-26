@@ -118,6 +118,62 @@ if(!isset($error)){
 		}
 	}
 }
+
+// Reset Password
+if(isset($_POST['forgotsubmit'])){
+
+	//email validation
+	if(!filter_var($_POST['forgotemail'], FILTER_VALIDATE_EMAIL)){
+	    $error[] = 'Please enter a valid email address';
+	} else {
+		$stmt = $db->prepare('SELECT email FROM users WHERE email = :email');
+		$stmt->execute(array(':email' => $_POST['forgotemail']));
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if(empty($row['email'])){
+			$error[] = 'Email provided is not on recognised.';
+		}
+
+	}
+
+	//if no errors have been created carry on
+	if(!isset($error)){
+
+		//create the activasion code
+		$token = md5(uniqid(rand(),true));
+
+		try {
+
+			$stmt = $db->prepare("UPDATE users SET resetToken = :token, resetComplete='No' WHERE email = :email");
+			$stmt->execute(array(
+				':email' => $row['email'],
+				':token' => $token
+			));
+
+			//send email
+			$to = $row['email'];
+			$subject = "Password Reset";
+			$body = "<p>Someone requested that the password be reset on " . $pagetitle . "</p>
+			<p>If this was a mistake, just ignore this email and nothing will happen.</p>
+			<p>To reset your password, visit the following address: <a href='".DIR."resetPassword.php?key=$token'>".DIR."resetPassword.php?key=$token</a></p>";
+
+			$mail = new Mail();
+			$mail->setFrom(SITEEMAIL);
+			$mail->addAddress($to);
+			$mail->subject($subject);
+			$mail->body($body);
+			$mail->send();
+
+			//redirect to index page
+			header('Location: index.php?action=reset');
+			exit;
+
+		//else catch the exception and show the error.
+		} catch(PDOException $e) {
+		    $error[] = $e->getMessage();
+		}
+	}
+}
 ?>
 
 <html lang="en">
@@ -162,7 +218,7 @@ if(!isset($error)){
         </ul>
 
   <ul class="nav navbar-nav navbar-right">
-      <li><a href="../login.php">Login</a>
+      <li><a href="" data-toggle="modal" data-target="#loginmodal">Login</a>
     </li>
   </ul>
 </div>
@@ -173,18 +229,15 @@ if(!isset($error)){
       <div class="indexcontainer">
       <div class="row">
         <div class="col-md-4"><div class="indexbox"><p>
-          <span class="glyphicon glyphicon-envelope" style="font-size:15em"></span>
-          <br>E-mail Query</p>
+          <span class="glyphicon glyphicon-envelope" style="font-size:15em"></span></p>
         </div>
       </div>
 
-        <div class="col-md-4"><div class="indexbox"><p><span class="glyphicon glyphicon-question-sign" style="font-size:15em"></span>
-          <br>Check KnowledgeBase</p>
+        <div class="col-md-4"><div class="indexbox"><p><span class="glyphicon glyphicon-question-sign" style="font-size:15em"></span></p>
         </div>
       </div>
 
         <div class="col-md-4"><div class="indexbox"><p><span class="glyphicon glyphicon-user" style="font-size:15em"></span>
-          <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#loginmodal">Login</button>
         </p>
       </div>
     </div>
@@ -224,6 +277,49 @@ if(!isset($error)){
                 <label class="control-label" for="signin"></label>
                 <div class="controls">
                   <button id="signin" name="login" class="btn btn-success">Sign In</button>
+                </div>
+              </div>
+              </fieldset>
+              </form>
+          </div>
+
+
+          <div class="tab-pane fade" id="forgotpass">
+              <form action="" method="post" class="form-horizontal" autocomplete="off">
+                <?php
+				//check for any errors
+				if(isset($error)){
+					foreach($error as $error){
+						echo '<p class="bg-danger">'.$error.'</p>';
+					}
+				}
+
+				if(isset($_GET['action'])){
+
+					//check the action
+					switch ($_GET['action']) {
+						case 'active':
+							echo "<div class='alert alert-success' role='alert'>Your account is now active you may now log in.</div>";
+							break;
+						case 'reset':
+							echo "<div class='alert alert-success' role='alert'>Check inbox for reset email</div>";
+							break;
+					}
+				}
+				?>
+              <fieldset>
+              <div class="control-group">
+                <label class="control-label" for="useremail">Email Address:</label>
+                <div class="controls">
+                  <input required="" name="forgotemail" type="text" class="form-control" placeholder="you@domain.com" class="input-medium" required="">
+                </div>
+              </div>
+
+              <!-- Button -->
+              <div class="control-group">
+                <label class="control-label" for="signin"></label>
+                <div class="controls">
+                  <button name="forgotsubmit" class="btn btn-success">E-mail Password Reset</button>
                 </div>
               </div>
               </fieldset>
@@ -310,8 +406,7 @@ if(!isset($error)){
         </div>
 
       </div>
-
-        </div>
+</div>
 
         <div class="modal-footer">
             <p>Not a member? <a href="#signup" data-toggle="tab">Sign Up</a></p>
@@ -324,9 +419,5 @@ if(!isset($error)){
       </div>
     </div>
   </div>
-
-
-
   </body>
-
   </html>
