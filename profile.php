@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
     }
 
    ?>
-<h1>Edit your profile</h1>
+<h1>Edit your profile</h1><br>
 
 <?php
 $loadprofile = $db->query("SELECT username, firstname, surname, password, email, phonenumber, department, usertype FROM users WHERE id = $_SESSION[id]");

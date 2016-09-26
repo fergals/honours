@@ -20,7 +20,7 @@ if(count($opentickets) > 0) {
         echo "<td>" . $o['department'] . "</td></tr>";
       }
       echo "</table>";
-      echo "<br /><hr /><br />";
+      echo "<br />";
 }
 
 //NEED TO ADD IF STATEMENT for no open tickets!

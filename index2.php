@@ -156,7 +156,7 @@ if(!isset($error)){
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="../index.php">Home<span class="sr-only">(current)</span></a></li>
+          <li><a href="../main.php">Home<span class="sr-only">(current)</span></a></li>
           <li><a href="../newticket.php">Submit New Ticket</a></li>
           <li><a href="../knowledge.php">Knowledge Base</a></li>
         </ul>
@@ -196,6 +196,13 @@ if(!isset($error)){
   <div class="modal fade bs-modal-sm" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
+          <br>
+          <div class="bs-example bs-example-tabs">
+              <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
+                <li class=""><a href="#signup" data-toggle="tab">Register</a></li>
+              </ul>
+          </div>
         <div class="modal-body">
           <div id="myTabContent" class="tab-content">
           <div class="tab-pane fade active in" id="signin">
@@ -229,7 +236,6 @@ if(!isset($error)){
               </fieldset>
               </form>
           </div>
-
           <div class="tab-pane fade" id="signup">
               <form role="form" action="" method="post" autocomplete="off" class="form-horizontal">
               <fieldset>
@@ -255,6 +261,7 @@ if(!isset($error)){
                 <label class="control-label" for="password">Password:</label>
                 <div class="controls">
                   <input id="password" name="password1" class="form-control" type="password" placeholder="********" class="input-large" required="">
+                  <em>1-8 Characters</em>
                 </div>
               </div>
 
@@ -308,18 +315,12 @@ if(!isset($error)){
               </fieldset>
               </form>
         </div>
-
       </div>
-
         </div>
-
         <div class="modal-footer">
-            <p>Not a member? <a href="#signup" data-toggle="tab">Sign Up</a></p>
-            <p>Forgot <a href="#forgotpass" data-toggle="tab">Password?</a></p>
-            <center>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </center>
-
+        <center>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </center>
         </div>
       </div>
     </div>
