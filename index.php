@@ -154,8 +154,8 @@ if(isset($_POST['forgotsubmit'])){
 			$to = $row['email'];
 			$subject = "Password Reset";
 			$body = "<p>Someone requested that the password be reset on " . $pagetitle . "</p>
-			<p>If this was a mistake, just ignore this email and nothing will happen.</p>
-			<p>To reset your password, visit the following address: <a href='".DIR."resetPassword.php?key=$token'>".DIR."resetPassword.php?key=$token</a></p>";
+			<p>If this was a mistake, just ignore this email.</p>
+			<p>To reset your password, visit the following address: <a href='".DIR."reset.php?key=$token'>".DIR."reset.php?key=$token</a></p>";
 
 			$mail = new Mail();
 			$mail->setFrom(SITEEMAIL);
