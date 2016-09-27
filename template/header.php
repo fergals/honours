@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
-//require_once(dirname(__FILE__)."../config/dbconnect.php"); ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">

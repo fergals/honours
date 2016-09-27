@@ -102,7 +102,7 @@ echo "<div class='col-xs-4'>";
 
     //Populate users dropdown from DB
     $getusers = $db->query("SELECT id, firstname, surname FROM users");
-    $getassigned = $db->query("SELECT users.firstname, users.surname, users.id, ticket.tID, ticket.assigned FROM users INNER JOIN ticket ON users.id=ticket.assigned WHERE ticket.tID = '$fullticket'");
+    $getassigned = $db->query("SELECT users.firstname, users.surname, users.id, ticket.tID, ticket.assigned FROM users INNER JOIN ticket ON users.id=ticket.assigned WHERE ticket.tID = 'T27091696'");
     while($ga = $getassigned->fetch(PDO::FETCH_ASSOC)){
     echo "<select name='assign' style='width: 174px;'>";
     echo "<option value='" . $ga['id'] . "' selected>" . $ga['firstname'] . " " . $ga['surname'] . "</option>";
@@ -135,22 +135,23 @@ if(isset($_POST['submitcomment'])) {
     $stmt->bindParam(':hidden', $hidden, PDO::PARAM_STR, 3);
     $stmt->execute();
   }
+    // E-mail users
+    if(isset($_POST['emailbtn'])){
+    $to = $_POST['emailto'];
+    $subject = "[$ticketid] Help! Online Support";
+    $body = $_POST['emailmsg'];
 
-if(isset($_POST['emailbtn'])){
-$to = $_POST['emailto'];
-$subject = "[$ticketid] Help! Online Support";
-$body = $_POST['emailmsg'];
+    $mail = new Mail();
+    $mail->setFrom(SITEMAIL);
+    $mail->addAddress($to);
+    $mail->subject($subject);
+    $mail->body($body);
+    $mail->send();
 
-$mail = new Mail();
-$mail->setFrom(SITEMAIL);
-$mail->addAddress($to);
-$mail->subject($subject);
-$mail->body($body);
-$mail->send();
+    echo "<div class='alert alert-success' role='alert'>Successfully updated ticket</div>";
+    }
+?>
 
-echo "Successful";
-}
- ?>
 </div>
 </div>
 

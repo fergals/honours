@@ -158,7 +158,7 @@ if(isset($_POST['forgotsubmit'])){
 			<p>To reset your password, visit the following address: <a href='".DIR."reset.php?key=$token'>".DIR."reset.php?key=$token</a></p>";
 
 			$mail = new Mail();
-			$mail->setFrom(SITEEMAIL);
+			$mail->setFrom(SITEMAIL);
 			$mail->addAddress($to);
 			$mail->subject($subject);
 			$mail->body($body);

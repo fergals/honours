@@ -16,8 +16,8 @@ $pagetitle = "HELP! Online Support System";
 define('DIR','http://help.fergalsexton.com/');
 define('SITEMAIL', 'noreply@fergalsexton.com');
 
-
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/user.php');
 include ($_SERVER['DOCUMENT_ROOT'].'/config/phpmailer/mail.php');
+
 $user = new User($db);
 ?>

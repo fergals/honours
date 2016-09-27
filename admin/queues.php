@@ -11,7 +11,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
 
   $userid = $_SESSION['id'];
 
-  $allopen = $db->query("SELECT tID, id, date, userid, category, department, urgency, assigned, id, status FROM ticket WHERE status='Open' AND assigned='Unassigned'");
+  $allopen = $db->query("SELECT tID, id, date, userid, category, department, urgency, assigned, id, status FROM ticket WHERE status='Open'");
   if(count($allopen) > 0 ) {
   echo "<table class='table table-striped'>
         <tr>
