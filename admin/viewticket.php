@@ -102,7 +102,7 @@ echo "<div class='col-xs-4'>";
 
     //Populate users dropdown from DB
     $getusers = $db->query("SELECT id, firstname, surname FROM users");
-    $getassigned = $db->query("SELECT users.firstname, users.surname, users.id, ticket.tID, ticket.assigned FROM users INNER JOIN ticket ON users.id=ticket.assigned WHERE ticket.tID = 'T27091696'");
+    $getassigned = $db->query("SELECT users.firstname, users.surname, users.id, ticket.tID, ticket.assigned FROM users INNER JOIN ticket ON users.id=ticket.assigned WHERE ticket.tID = '$fullticket'");
     while($ga = $getassigned->fetch(PDO::FETCH_ASSOC)){
     echo "<select name='assign' style='width: 174px;'>";
     echo "<option value='" . $ga['id'] . "' selected>" . $ga['firstname'] . " " . $ga['surname'] . "</option>";
@@ -221,7 +221,7 @@ if(isset($_POST['submitcomment'])) {
             <?php
 
             //Needs to be updated to allow actual users ID
-            $sendemail = $db->query("SELECT users.email FROM users INNER JOIN ticket ON users.id=ticket.userid WHERE ticket.tID = $ticketid");
+            $sendemail = $db->query("SELECT users.email FROM users INNER JOIN ticket ON ticket.userid=users.id WHERE ticket.tID = '$ticketid'");
              while($s = $sendemail->fetch(PDO::FETCH_OBJ)) {
                echo "<input type='text' class='form-control' id='recipient-name' name='emailto' value='" . $s->email . "'>";
             } ?>

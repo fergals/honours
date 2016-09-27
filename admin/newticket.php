@@ -38,7 +38,7 @@ if(isset($_POST['submitticket'])) {
   $urgency = $_POST['urgency'];
   $department = $_POST['department'];
   $category = $_POST['category'];
-  $assigned = "Unassigned";
+  $assigned = "1";
   $stmt = $db->prepare("INSERT INTO ticket (tID, userid, query, date, queue, status, urgency, department, category, assigned) VALUES (:tID, :userid, :query, :date, :queue, :status, :urgency, :department, :category, :assigned)");
   $stmt->bindParam(':tID', $tID, PDO::PARAM_INT, 20);
   $stmt->bindParam(':userid', $userid, PDO::PARAM_INT, 100);
