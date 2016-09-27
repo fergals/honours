@@ -34,8 +34,6 @@ if(isset($_POST['updateticket'])) {
 echo "<div class='col-xs-4'>";
 
 
-
-
  //Get User information and display on left
  $userinfo = $db->query("SELECT id, username, firstname, surname, email, phonenumber, department, usertype FROM users where id = $_SESSION[id] ");
  while($u = $userinfo->fetch(PDO::FETCH_OBJ)) {
@@ -138,6 +136,20 @@ if(isset($_POST['submitcomment'])) {
     $stmt->execute();
   }
 
+if(isset($_POST['emailbtn'])){
+$to = $_POST['emailto'];
+$subject = "[$ticketid] Help! Online Support";
+$body = $_POST['emailmsg'];
+
+$mail = new Mail();
+$mail->setFrom(SITEMAIL);
+$mail->addAddress($to);
+$mail->subject($subject);
+$mail->body($body);
+$mail->send();
+
+echo "Successful";
+}
  ?>
 </div>
 </div>
@@ -185,12 +197,47 @@ if(isset($_POST['submitcomment'])) {
          </div>
 
         <button type='submitcomment' name='submitcomment' class='btn btn-default'>Submit Comment</button>
-        <button name='sendemail' class='btn btn-default'>Send Email</button>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Send e-mail to user</button>
         <button type='submit' name='closeticket' class='btn btn-default'>Close ticket</button>
       </form>
+      <br>
     </div>
 </div>
 </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">New e-mail</h4>
+      </div>
+      <div class="modal-body">
+        <form method='post' action=''>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Recipient:</label>
+            <?php
+
+            //Needs to be updated to allow actual users ID
+            $sendemail = $db->query("SELECT users.email FROM users INNER JOIN ticket ON users.id=ticket.userid WHERE ticket.tID = $ticketid");
+             while($s = $sendemail->fetch(PDO::FETCH_OBJ)) {
+               echo "<input type='text' class='form-control' id='recipient-name' name='emailto' value='" . $s->email . "'>";
+            } ?>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" id="message-text" name="emailmsg"></textarea>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" name='emailbtn'>Send e-mail</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <?php include '../template/footer.php'; ?>

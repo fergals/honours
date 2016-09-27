@@ -1,11 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
-if ($user->is_logged_in() ) {
-  header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $location);
-}
-else {
-  header("Location: uhoh.php");
-}
+
 ?>
 
 <div class="container-fluid">

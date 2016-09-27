@@ -8,9 +8,10 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../css/bootstrap/js/bootstrap.js"></script>
     <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,9 +37,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
     <li class="dropdown">
       <a href="../admin/index.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Ticket Management</a></li>
-        <li><a href="#">Users</a></li>
+        <li><a href="../admin/index.php">Action</a></li>
+        <li><a href="../admin/index.php">Ticket Management</a></li>
+        <li><a href="../admin/index.php">Users</a></li>
       </ul>
       <li><a href="../profile.php">Profile</a>
       <li><a href="../logout.php">Logout</a>
