@@ -184,6 +184,7 @@ if(isset($_POST['forgotsubmit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="css/bootstrap/js/bootstrap.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -342,7 +343,7 @@ if(isset($_POST['forgotsubmit'])){
               <div class="control-group">
                 <label class="control-label" for="userid">Username:</label>
                 <div class="controls">
-                  <input id="userid" name="username" class="form-control" type="text" placeholder="JoeSixpack" class="input-large" required="">
+                  <input id="userid" name="username" class="form-control" type="text" placeholder="JohnDoe" class="input-large" required="">
                 </div>
               </div>
 
@@ -390,9 +391,17 @@ if(isset($_POST['forgotsubmit'])){
               <div class="control-group">
                 <label class="control-label" for="userid">Telephone:</label>
                 <div class="controls">
-                  <input id="userid" name="phonenumber" class="form-control" type="text" placeholder="First Name" class="input-large" required="">
+                  <input id="userid" name="phonenumber" class="form-control" type="text" placeholder="07111111111" class="input-large" required="">
                 </div>
               </div>
+
+              <div class="control-group">
+                <label class="control-label" for="userid">Are you human?</label>
+                <div class="controls">
+                <div class="g-recaptcha" data-sitekey="6LeUxAcUAAAAAEzq-tzscA-xzBFDCdoE0nNtc1Ck"></div>
+              </div>
+            </div>
+
 
               <!-- Button -->
               <div class="control-group">
