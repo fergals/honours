@@ -1,5 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php'); ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
+if(!$user->is_logged_in()){ header('Location: uhoh.php'); }  ?>
 
 <div id="content">
 <?php

@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
+if(!$user->is_logged_in()){ header('Location: uhoh.php'); }  
 
 if(isset($_POST['submit'])) {
     //Gets id from ticket.table and increments from last row

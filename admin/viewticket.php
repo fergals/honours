@@ -1,7 +1,7 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
+if(!$user->is_logged_in()){ header('Location: ../uhoh.php'); }    ?>
 
 <?php
 
@@ -164,7 +164,7 @@ if(isset($_POST['submitcomment'])) {
 
     $comments = $db->query("SELECT comments.comment, comments.date, users.firstname, users.surname, users.department FROM comments INNER JOIN users ON comments.userid=users.id WHERE comments.tID = '$fullticket'");
        while($c = $comments->fetch(PDO::FETCH_OBJ)) {
-         echo $c->comment . '<br />' . $c->firstname . ' ' . $c->surname . ' on ' . $c->date . ' in ' . $c->department . '<br /><br />';
+         echo "<div id='comment'>" . $c->comment . '<br />' . $c->firstname . ' ' . $c->surname . ' on ' . $c->date . ' in ' . $c->department . '</div><br />';
        }
 ?>
 
@@ -192,9 +192,6 @@ if(isset($_POST['submitcomment'])) {
            <label>
              <input type="checkbox" name='hidden' value='true'> Hide comment from user
            </label>
-           <label>
-           <input type="checkbox" name='emailticket' value='true'> E-mail copy of comment to user
-         </label>
          </div>
 
         <button type='submitcomment' name='submitcomment' class='btn btn-default'>Submit Comment</button>

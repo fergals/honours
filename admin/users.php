@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php'); ?>
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
+if(!$user->is_logged_in()){ header('Location: ../uhoh.php'); }    ?>
 
 <div id="content">
 <?php

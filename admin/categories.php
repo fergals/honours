@@ -11,6 +11,7 @@ function selectionchange()
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/template/adminheader.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
+if(!$user->is_logged_in()){ header('Location: ../uhoh.php'); }  
 
 $date = date("Y-m-d H:i:s");
 $depid = $_SESSION['id'];
