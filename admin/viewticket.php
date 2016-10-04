@@ -11,6 +11,19 @@ $userid = $_SESSION['id'];
 echo "<div class='container'>";
 echo "<div class='row'>";
 
+// Close ticket
+if(isset($_POST['closeticket'])){
+  $ticketstatus = "Closed";
+  $time = date("Y-m-d H:i:s");
+  $stmt = $db->prepare("UPDATE ticket SET status=:status, closed=:timeclosed WHERE tID = '$ticketid'");
+  $stmt->bindParam(':status', $ticketstatus, PDO::PARAM_INT, 100);
+  $stmt->bindParam(':timeclosed', $time, PDO::PARAM_STR, 100);
+  $stmt->execute();
+
+echo "<div class='alert alert-success' role='alert'>This ticket has now been closed</div>";
+}
+
+
 if(isset($_POST['updateticket'])) {
 
   $queue = $_POST['queue'];

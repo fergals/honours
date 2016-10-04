@@ -184,7 +184,6 @@ if(isset($_POST['forgotsubmit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="css/bootstrap/js/bootstrap.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
     <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -214,12 +213,11 @@ if(isset($_POST['forgotsubmit'])){
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="../index.php">Home<span class="sr-only">(current)</span></a></li>
-          <li><a href="../newticket.php">Submit New Ticket</a></li>
           <li><a href="../knowledge.php">Knowledge Base</a></li>
         </ul>
 
   <ul class="nav navbar-nav navbar-right">
-      <li><a href="" data-toggle="modal" data-target="#loginmodal">Login</a>
+      <li><a href="" data-toggle="modal" data-target="#loginmodal">Login / Register</a>
     </li>
   </ul>
 </div>
@@ -394,14 +392,6 @@ if(isset($_POST['forgotsubmit'])){
                   <input id="userid" name="phonenumber" class="form-control" type="text" placeholder="07111111111" class="input-large" required="">
                 </div>
               </div>
-
-              <div class="control-group">
-                <label class="control-label" for="userid">Are you human?</label>
-                <div class="controls">
-                <div class="g-recaptcha" data-sitekey="6LeUxAcUAAAAAEzq-tzscA-xzBFDCdoE0nNtc1Ck"></div>
-              </div>
-            </div>
-
 
               <!-- Button -->
               <div class="control-group">
