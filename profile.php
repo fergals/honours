@@ -1,6 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
-if(!$user->is_logged_in()){ header('Location: uhoh.php'); }  
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
+if(!$user->is_logged_in()){ header('Location: uhoh.php'); }
+require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/header.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/menu.php');
+$pagename = "Edit Profile";
 
 if (isset($_POST['submit'])) {
 
@@ -21,7 +24,7 @@ if (isset($_POST['submit'])) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if(!empty($row['email'])){
-      $error[]= 'Email address is already in use, choose another';
+      $error[]= 'Email address is already in use';
     }
   }
 
@@ -54,23 +57,21 @@ if (isset($_POST['submit'])) {
   }
 
 ?>
-<div id="content">
-  <?php
-    // check for errors
-    if(isset($error)){
-      foreach($error as $error){
-        echo '<p class="bg-danger">' . $error . '</p>';
-      }
-    }
+<!-- Breadcrumbs -->
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div id="result"></div>
+		<div id="content">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active"><?php echo $pagename; ?></li>
+			</ol>
+		</div><!--/.row-->
 
-    //if successfull
-    if(isset($_GET['action']) && $_GET['action'] == 'updated'){
-      echo "<div class='alert alert-success' role='alert'>Successfully updated profile</div>";
-    }
 
-   ?>
-<h1>Edit your profile</h1><br>
-
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+							<div class="panel-body">
 <?php
 $loadprofile = $db->query("SELECT username, firstname, surname, password, email, phonenumber, department, usertype FROM users WHERE id = $_SESSION[id]");
 
@@ -79,17 +80,17 @@ $loadprofile = $db->query("SELECT username, firstname, surname, password, email,
       <label class='col-sm-2 control-label'>First Name</label>
       <div class='col-sm-10'>";
       while ($o = $loadprofile->fetch(PDO::FETCH_ASSOC)){
-        echo "<input class='form-control' name='firstname' placeholder='" . $o['firstname'] . "'></div></div>";
+        echo "<input class='form-control' name='firstname' value='" . $o['firstname'] . "'></div></div>";
         echo "<div class='form-group'><label class='col-sm-2 control-label'>Surname</label>
-              <div class='col-sm-10'><input class='form-control' name='surname' placeholder='" . $o['surname'] ."'></div></div>";
+              <div class='col-sm-10'><input class='form-control' name='surname' value='" . $o['surname'] ."'></div></div>";
         echo "<div class='form-group'><label class='col-sm-2 control-label'>Password</label>
               <div class='col-sm-10'><input type='password' class='form-control' name='password1' placeholder='Password'></div></div>";
         echo "<div class='form-group'><label class='col-sm-2 control-label'>Confirm Password</label>
               <div class='col-sm-10'><input type='password' class='form-control' name='password2' placeholder='Verify Password'></div></div>";
         echo "<div class='form-group'><label class='col-sm-2 control-label'>E-mail Address</label>
-              <div class='col-sm-10'><input class='form-control' name='email' placeholder='" . $o['email'] ."'></div></div>";
+              <div class='col-sm-10'><input class='form-control' name='email' value='" . $o['email'] ."'></div></div>";
         echo "<div class='form-group'><label class='col-sm-2 control-label'>Phonenumber</label>
-              <div class='col-sm-10'><input class='form-control' name='phonenumber' placeholder='" . $o['phonenumber'] ."'></div></div>";
+              <div class='col-sm-10'><input class='form-control' name='phonenumber' value='" . $o['phonenumber'] ."'></div></div>";
     }
 ?>
     <div class="form-group">
@@ -102,5 +103,7 @@ $loadprofile = $db->query("SELECT username, firstname, surname, password, email,
 
 
 </div>
-<?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php'); ?>
+</div>
+</div>
+</div>
+</div>

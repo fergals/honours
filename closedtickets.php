@@ -4,7 +4,7 @@ if(!$user->is_logged_in()){ header('Location: uhoh.php'); }
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/header.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/menu.php');
 
-$pagename = "Open Tickets" ?>
+$pagename = "Closed Tickets" ?>
 
 
 <!-- Breadcrumbs -->
@@ -26,22 +26,25 @@ $pagename = "Open Tickets" ?>
 							</div>
 							<div class="panel-body">
 <?php
-$opentickets = $db->query("SELECT tID, id, date, query, userid, category, department FROM ticket WHERE userid = '$_SESSION[id]' AND status='Open'");
+$opentickets = $db->query("SELECT tID, id, date, query, userid, category, department FROM ticket WHERE userid = '$_SESSION[id]' AND status='Closed'");
 
-if(count($opentickets) > 0) {
+if($opentickets->fetchColumn() > 0) {
   echo "<table class='table table-striped'>
         <tr>
         <th>Ticket</th>
         <th>Date Submitted</th>
 				<th>Query</th></tr>";
         while($o = $opentickets->fetch(PDO::FETCH_ASSOC)){
-				$dateformat = date('d/m/Y h:m a', strtotime($o['date']));
+				$dateformat = date('d/m/Y', strtotime($o['date']));
         echo "<tr><td><a href='ticket.php?id=" . $o['tID'] . "'>" . $o['tID'] ."</td>";
         echo "<td>" . $dateformat . "</td>";
         echo "<td>" . substr($o['query'],0,110) . "</td></tr>";
       }
       echo "</table>";
       echo "<br />";
+}
+else {
+	echo "You have no closed tickets";
 }
 
 ?>

@@ -1,6 +1,10 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/template/header.php');
-if(!$user->is_logged_in()){ header('Location: uhoh.php'); }  
+require_once($_SERVER['DOCUMENT_ROOT'].'/templates/header.php');
+if(!$user->is_logged_in()){ header('Location: uhoh.php'); }
+require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/header.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/menu.php');
+
+$pagename = "Submit new ticket";
 
 if(isset($_POST['submit'])) {
     //Gets id from ticket.table and increments from last row
@@ -19,7 +23,7 @@ if(isset($_POST['submit'])) {
     $urgency = "Low";
     $department = "None";
     $category = "None";
-    $assigned = "1"; //auto apply ticket to unassigned
+    $assigned = "1"; //auto apply ticket to unassigned (userid: 1)
 
     $stmt = $db->prepare("INSERT INTO ticket (tID, userid, query, date, queue, status, urgency, department, category, assigned) VALUES (:tID, :userid, :query, :date, :queue, :status, :urgency, :department, :category, :assigned)");
     $dateinc = $db->query("SELECT id FROM ticket ORDER BY ID DESC LIMIT 1");
@@ -35,30 +39,45 @@ if(isset($_POST['submit'])) {
     $stmt->bindParam(':category', $category, PDO::PARAM_STR, 10000);
     $stmt->bindParam(':assigned', $assigned, PDO::PARAM_STR, 10000);
     $stmt->execute();
-    echo "<div class='alert alert-success' role='alert'>Successsfull submited ticket</div>";
+    $ticketsubmit = true;
+    $ticketsuccess = "<div class='alert bg-success' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-checkmark'></use></svg> Successfully submitted ticket<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove' data-dismiss='modal'></span></a></div>";
     $stmt = null;
 }
 
 ?>
 
-<div class="row">
-  <div class="col-xs-6 col-md-4">Please write your query below. Be as descriptive as possible and attach any files needed in order for staff members to action quickly.<br>
-  Please check the ticket portal regulary for responses</div>
-  <div class="col-xs-12 col-md-8">
-    <form class="form-horizontal" action="" method="post" />
-      <div class="form-group">
-        <label for="inputEmail3" class="col-sm-2 control-label">Query</label>
-        <div class="col-sm-10">
-          <textarea class='form-control' rows='5' name='query'></textarea>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" name="submit" class="btn btn-default">Submit</button>
-        </div>
-      </div>
-  </div>
+<!-- Breadcrumbs -->
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <?php if(isset($ticketsubmit)) {echo $ticketsuccess;} ?>
+		<div id="result"></div>
+		<div id="content">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="index.php"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active"><?php echo $pagename; ?></li>
+			</ol>
+		</div><!--/.row-->
+
+
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+							<div class="panel-body">
+                <p> Explain your issue succinctly but include information we need such as what you were doing when the problem occurred or where it has happened.</p>
+                <form class="form-horizontal" action="" method="post" />
+                  <div class="form-group">
+                      <textarea class='form-control' rows='5' name='query' placeholder="Please enter your query here"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
+                    </form>
+</div>
+</div>
+</div>
 </div>
 
-<? require_once($_SERVER['DOCUMENT_ROOT'].'/template/footer.php'); ?>
+			</div><!--/.col-->
+		</div><!--/.row-->
+	</div>	<!--/.main-->

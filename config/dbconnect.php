@@ -1,6 +1,9 @@
 <?php
 session_start();
 date_default_timezone_set('Europe/London');
+ob_start();
+
+$current_date = date('d/m/Y - H:i:s');
 
 $servername = "localhost";
 $username = "fergalse_sql";

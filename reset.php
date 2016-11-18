@@ -175,125 +175,267 @@ if(isset($_POST['forgotsubmit'])){
 	}
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php echo $pagetitle ?></title>
 
-<html lang="en">
-  <head>
-  <title><?php if(isset($pagetitle)){ echo $pagetitle; }?></title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="css/bootstrap/js/bootstrap.js"></script>
-    <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<!--Icons-->
+<script src="/js/lumino.glyphs.js"></script>
+
+<!--[if lt IE 9]>
+<script src="../js/html5shiv.js"></script>
+<script src="../js/respond.min.js"></script>
+<![endif]-->
+
 </head>
 
 <body>
-  <?php
-    // Check if token passed is same as users in DB
-    $stmt = $db->prepare('SELECT resetToken, resetComplete FROM users WHERE resetToken = :token');
-    $stmt->execute(array(':token' => $_GET['key']));
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>HELP!</span>Ticket_management</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="" data-toggle="modal" data-target="#loginmodal">Login / Register</span></a>
+					</li>
+				</ul>
+			</div>
 
-    //if no token from db then kill the page
-    if(empty($row['resetToken'])){
-      $stop = 'Invalid token, please use the link provided in the reset email.';
-    }
-    elseif($row['resetComplete'] == 'Yes') {
-    $stop = 'Your password has already been changed!';
-  }
-  //if form has been submitted process it
-  if(isset($_POST['submit'])){
+		</div><!-- /.container-fluid -->
+	</nav>
+	<?php
+		// check for errors
+		if(isset($error)){
+			foreach($error as $error){
+				echo "<div class='alert bg-warning' role='alert'>
+					<svg class='glyph stroked flag'><use xlink:href='#stroked-flag'></use></svg>" . $error . "<a href='#' class='pull-right' data-dismiss='modal'><span class='glyphicon glyphicon-remove'></span></a>
+				</div>";
+			}
+		}
 
-  	//basic validation
-  	if(strlen($_POST['password']) < 3){
-  		$error[] = 'Password is too short.';
-  	}
+		//if successfull
+		if(isset($_GET['action']) && $_GET['action'] == 'joined'){
+			echo "<div class='alert bg-success' role='alert'>
+					<svg class='glyph stroked checkmark'><use xlink:href='#stroked-checkmark'></use></svg> Successfully Registered<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a>
+				</div>";
+		}
 
-  	if(strlen($_POST['passwordConfirm']) < 3){
-  		$error[] = 'Confirm password is too short.';
-  	}
+	 ?>
 
-  	if($_POST['password'] != $_POST['passwordConfirm']){
-  		$error[] = 'Passwords do not match.';
-  	}
+<div class="container">
+	<div class="row">
+			<div class="col-lg-12">
+			</div>
+			<div class="col-md-8 center-block">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h2> Change Password</h2>
+					</div>
+					<div class="panel-body">
+            <form role="form" method="post" action="" autocomplete="off">
+              <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="1">
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control input-lg" placeholder="Confirm Password" tabindex="1">
+                </div>
+              </div>
+            </div>
 
-  	//if no errors have been created carry on
-  	if(!isset($error)){
-
-  		//hash the password
-  		$hashedpassword = $user->password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-  		try {
-
-  			$stmt = $db->prepare("UPDATE users SET password = :hashedpassword, resetComplete = 'Yes'  WHERE resetToken = :token");
-  			$stmt->execute(array(
-  				':hashedpassword' => $hashedpassword,
-  				':token' => $row['resetToken']
-  			));
-
-  			//redirect to index page
-  			header('Location: index.php?action=resetAccount');
-  			exit;
-
-  		//else catch the exception and show the error.
-  		} catch(PDOException $e) {
-  		    $error[] = $e->getMessage();
-  		}
-
-  	}
-
-  }
-   ?>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand">
-          <img alt="HELP!" width="25px" src="/images/logo.png">
-        </a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="../index.php">Home<span class="sr-only">(current)</span></a></li>
-          <li><a href="../newticket.php">Submit New Ticket</a></li>
-          <li><a href="../knowledge.php">Knowledge Base</a></li>
-        </ul>
-
-  <ul class="nav navbar-nav navbar-right">
-      <li><a href="" data-toggle="modal" data-target="#loginmodal">Login</a>
-    </li>
-  </ul>
-</div>
-    </div>
-  </nav>
-
-    <div class="container">
-      <?php if(isset($stop)){
-
-	    		echo "<p class='bg-danger'>$stop</p>";
-
-	    	} else { ?>
-          <h2>Change Password</h2>
-          <form role="form" method="post" action="" autocomplete="off">
+            <hr>
             <div class="row">
-						<div class="col-xs-6 col-sm-6 col-md-6">
-							<div class="form-group">
-								<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="1">
-							</div>
-						</div>
-						<div class="col-xs-6 col-sm-6 col-md-6">
-							<div class="form-group">
-								<input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control input-lg" placeholder="Confirm Password" tabindex="1">
-							</div>
-						</div>
+              <div class="col-xs-6 col-md-6"><input type="submit" name="submit" value="Change Password" class="btn btn-primary btn-block btn-lg" tabindex="3"></div>
+            </div>
+          </form>
 					</div>
+				</div>
+			</div>
 
-					<hr>
-					<div class="row">
-						<div class="col-xs-6 col-md-6"><input type="submit" name="submit" value="Change Password" class="btn btn-primary btn-block btn-lg" tabindex="3"></div>
-					</div>
-				</form>
-        <?php } ?>
+		</div><!-- /.row -->
 
-  </body>
-  </html>
+		<div class="modal fade bs-modal-sm" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-sm">
+	      <div class="modal-content">
+	        <div class="modal-body">
+	          <div id="myTabContent" class="tab-content">
+	          <div class="tab-pane fade active in" id="signin">
+	              <form action="" method="post" class="form-horizontal">
+	              <fieldset>
+	              <!-- Sign In Form -->
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Username:</label>
+	                <div class="controls">
+	                  <input required="" id="userid" name="loginusername" type="text" class="form-control" placeholder="Username" class="input-medium" required="">
+	                </div>
+	              </div>
+
+	              <!-- Password input-->
+	              <div class="control-group">
+	                <label class="control-label" for="passwordinput">Password:</label>
+	                <div class="controls">
+	                  <input required="" id="passwordinput" name="loginpassword" class="form-control" type="password" placeholder="********" class="input-medium">
+	                </div>
+	              </div>
+
+
+	              <!-- Button -->
+	              <div class="control-group">
+	                <label class="control-label" for="signin"></label>
+	                <div class="controls">
+	                  <button id="signin" name="login" class="btn btn-success">Sign In</button>
+	                </div>
+	              </div>
+	              </fieldset>
+	              </form>
+	          </div>
+
+
+	          <div class="tab-pane fade" id="forgotpass">
+	              <form action="" method="post" class="form-horizontal" autocomplete="off">
+	                <?php
+					//check for any errors
+					if(isset($error)){
+						foreach($error as $error){
+							echo '<p class="bg-danger">'.$error.'</p>';
+						}
+					}
+
+					if(isset($_GET['action'])){
+
+						//check the action
+						switch ($_GET['action']) {
+							case 'active':
+								echo "<div class='alert alert-success' role='alert'>Your account is now active you may now log in.</div>";
+								break;
+							case 'reset':
+								echo "<div class='alert alert-success' role='alert'>Check inbox for reset email</div>";
+								break;
+						}
+					}
+					?>
+	              <fieldset>
+	              <div class="control-group">
+	                <label class="control-label" for="useremail">Email Address:</label>
+	                <div class="controls">
+	                  <input required="" name="forgotemail" type="text" class="form-control" placeholder="you@domain.com" class="input-medium" required="">
+	                </div>
+	              </div>
+
+	              <!-- Button -->
+	              <div class="control-group">
+	                <label class="control-label" for="signin"></label>
+	                <div class="controls">
+	                  <button name="forgotsubmit" class="btn btn-success">E-mail Password Reset</button>
+	                </div>
+	              </div>
+	              </fieldset>
+	              </form>
+	          </div>
+
+	          <div class="tab-pane fade" id="signup">
+	              <form role="form" action="" method="post" autocomplete="off" class="form-horizontal">
+	              <fieldset>
+	              <!-- Sign Up Form -->
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="Email">Email:</label>
+	                <div class="controls">
+	                  <input id="Email" name="email" class="form-control" type="text" placeholder="Your email address" class="input-large" required="">
+	                </div>
+	              </div>
+
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Username:</label>
+	                <div class="controls">
+	                  <input id="userid" name="username" class="form-control" type="text" placeholder="JohnDoe" class="input-large" required="">
+	                </div>
+	              </div>
+
+	              <!-- Password input-->
+	              <div class="control-group">
+	                <label class="control-label" for="password">Password:</label>
+	                <div class="controls">
+	                  <input id="password" name="password1" class="form-control" type="password" placeholder="********" class="input-large" required="">
+	                </div>
+	              </div>
+
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="reenterpassword">Verify Password:</label>
+	                <div class="controls">
+	                  <input id="reenterpassword" class="form-control" name="password2" type="password" placeholder="********" class="input-large" required="">
+	                </div>
+	              </div>
+
+
+	              <div class="control-group">
+	                <label class="control-label" for="userid">First Name:</label>
+	                <div class="controls">
+	                  <input id="userid" name="firstname" class="form-control" type="text" placeholder="First Name" class="input-large" required="">
+	                </div>
+	              </div>
+
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Surname:</label>
+	                <div class="controls">
+	                  <input id="userid" name="surname" class="form-control" type="text" placeholder="Surname" class="input-large" required="">
+	                </div>
+	              </div>
+
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Telephone:</label>
+	                <div class="controls">
+	                  <input id="userid" name="phonenumber" class="form-control" type="text" placeholder="07111111111" class="input-large" required="">
+	                </div>
+	              </div>
+
+	              <!-- Button -->
+	              <div class="control-group">
+	                <label class="control-label" for="confirmsignup"></label>
+	                <div class="controls">
+	                  <button id="confirmsignup" name="register" class="btn btn-success">Register</button>
+	                </div>
+	              </div>
+	              </fieldset>
+	              </form>
+	        </div>
+
+	      </div>
+	</div>
+
+	        <div class="modal-footer">
+	            <p><a href="#signup" data-toggle="tab">Not Registered?</a></p>
+	            <p><a href="#forgotpass" data-toggle="tab">Forgot Password?</a></p>
+	            <center>
+	              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	            </center>
+
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+
+	</body>
+	</html>

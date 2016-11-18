@@ -81,13 +81,12 @@ if(!isset($error)){
 
   try {
 
-    $stmt = $db->prepare('INSERT INTO users (username, firstname, surname, dateofbirth, password, email, phonenumber, department, usertype, creationdate, active) VALUES (:username, :firstname, :surname, :dateofbirth, :password, :email, :phonenumber, :department, :usertype, :creationdate, :active)');
+    $stmt = $db->prepare('INSERT INTO users (username, firstname, surname, password, email, phonenumber, department, usertype, creationdate, active) VALUES (:username, :firstname, :surname, :password, :email, :phonenumber, :department, :usertype, :creationdate, :active)');
     $stmt->execute(array(
                           ':username' => $_POST['username'],
                           ':firstname' => $_POST['firstname'],
                           ':surname' => $_POST['surname'],
                           ':password' => $hashpassword,
-                          ':dateofbirth' => $_POST['dateofbirth'],
                           ':email' => $_POST['email'],
                           ':phonenumber' => $_POST['phonenumber'],
                           ':department' => $department,
@@ -102,7 +101,7 @@ if(!isset($error)){
 			<p>To activate your account, please click on this link: <a href='".DIR."activate.php?x=$id&y=$activasion'>".DIR."activate.php?x=$id&y=$activasion</a></p>";
 
 			$mail = new Mail();
-			$mail->setFrom(SITEEMAIL);
+			$mail->setFrom(SITEMAIL);
 			$mail->addAddress($to);
 			$mail->subject($subject);
 			$mail->body($body);
@@ -175,248 +174,274 @@ if(isset($_POST['forgotsubmit'])){
 	}
 }
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php echo $pagetitle ?></title>
 
-<html lang="en">
-  <head>
-  <title><?php if(isset($pagetitle)){ echo $pagetitle; }?></title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="css/bootstrap/js/bootstrap.js"></script>
-    <link href="../css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<!--Icons-->
+<script src="/js/lumino.glyphs.js"></script>
+
+<!--[if lt IE 9]>
+<script src="../js/html5shiv.js"></script>
+<script src="../js/respond.min.js"></script>
+<![endif]-->
+
 </head>
 
 <body>
-  <?php
-    // check for errors
-    if(isset($error)){
-      foreach($error as $error){
-        echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
-      }
-    }
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>HELP!</span>Ticket_management</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="" data-toggle="modal" data-target="#loginmodal">Login / Register</span></a>
+					</li>
+				</ul>
+			</div>
 
-    //if successfull
-    if(isset($_GET['action']) && $_GET['action'] == 'joined'){
-      echo "<div class='alert alert-success' role='alert'>Successfully registered</div>";
-    }
+		</div><!-- /.container-fluid -->
+	</nav>
+	<?php
+		// check for errors
+		if(isset($error)){
+			foreach($error as $error){
+				echo "<div class='alert bg-warning' role='alert'>
+					<svg class='glyph stroked flag'><use xlink:href='#stroked-flag'></use></svg>" . $error . "<a href='#' class='pull-right' data-dismiss='modal'><span class='glyphicon glyphicon-remove'></span></a>
+				</div>";
+			}
+		}
 
-   ?>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand">
-          <img alt="HELP!" width="25px" src="/images/logo.png">
-        </a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="../index.php">Home<span class="sr-only">(current)</span></a></li>
-          <li><a href="../knowledge.php">Knowledge Base</a></li>
-        </ul>
+		//if successfull
+		if(isset($_GET['action']) && $_GET['action'] == 'joined'){
+			echo "<div class='alert bg-success' role='alert'>
+					<svg class='glyph stroked checkmark'><use xlink:href='#stroked-checkmark'></use></svg> Successfully Registered<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a>
+				</div>";
+		}
 
-  <ul class="nav navbar-nav navbar-right">
-      <li><a href="" data-toggle="modal" data-target="#loginmodal">Login / Register</a>
-    </li>
-  </ul>
-</div>
-    </div>
-  </nav>
+	 ?>
 
-    <div class="container">
-      <div class="indexcontainer">
-      <div class="row">
-        <div class="col-md-4"><div class="indexbox"><p>
-          <span class="glyphicon glyphicon-envelope" style="font-size:15em"></span></p>
-        </div>
-      </div>
+<div class="container">
+	<div class="row">
+			<div class="col-lg-12">
+				<h2>Need Help?</h2>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						Frequently Asked Questions
+					</div>
+					<div class="panel-body">
+						<p>Have you tried searching for your answer in our KnowledgeBase?</p> <p>Our most frequently asked questions are displayed here to allow for a quick resolution.</p>
+					</div>
+				</div>
+			</div>
 
-        <div class="col-md-4"><div class="indexbox"><p><span class="glyphicon glyphicon-question-sign" style="font-size:15em"></span></p>
-        </div>
-      </div>
+			<div class="col-md-4">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						Submit a ticket
+					</div>
+					<div class="panel-body">
+						<p>If you are unable to find your answer in our Knowledgebase, please login and submit to a ticket.</p>
+						<p>The ticket will be submitted to the correct department and reply to you quickly</p>
+					</div>
+				</div>
+			</div>
 
-        <div class="col-md-4"><div class="indexbox"><p><span class="glyphicon glyphicon-user" style="font-size:15em"></span>
-        </p>
-      </div>
-    </div>
-      </div>
-    </div>
-  </div>
+			<div class="col-md-4">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						E-mail
+					</div>
+					<div class="panel-body">
+						<p>Tickets can be submitted from your own e-mail client by e-mailing EMAIL ADDRESS</p>
+						<p>Please ensure you have provided as much information as possible</p>
+					</div>
+				</div>
+			</div>
 
+		</div><!-- /.row -->
 
-  <div class="modal fade bs-modal-sm" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div id="myTabContent" class="tab-content">
-          <div class="tab-pane fade active in" id="signin">
-              <form action="" method="post" class="form-horizontal">
-              <fieldset>
-              <!-- Sign In Form -->
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="userid">Username:</label>
-                <div class="controls">
-                  <input required="" id="userid" name="loginusername" type="text" class="form-control" placeholder="Username" class="input-medium" required="">
-                </div>
-              </div>
+		<div class="modal fade bs-modal-sm" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-sm">
+	      <div class="modal-content">
+	        <div class="modal-body">
+	          <div id="myTabContent" class="tab-content">
+	          <div class="tab-pane fade active in" id="signin">
+	              <form action="" method="post" class="form-horizontal">
+	              <fieldset>
+	              <!-- Sign In Form -->
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Username:</label>
+	                <div class="controls">
+	                  <input required="" id="userid" name="loginusername" type="text" class="form-control" placeholder="Username" class="input-medium" required="">
+	                </div>
+	              </div>
 
-              <!-- Password input-->
-              <div class="control-group">
-                <label class="control-label" for="passwordinput">Password:</label>
-                <div class="controls">
-                  <input required="" id="passwordinput" name="loginpassword" class="form-control" type="password" placeholder="********" class="input-medium">
-                </div>
-              </div>
-
-
-              <!-- Button -->
-              <div class="control-group">
-                <label class="control-label" for="signin"></label>
-                <div class="controls">
-                  <button id="signin" name="login" class="btn btn-success">Sign In</button>
-                </div>
-              </div>
-              </fieldset>
-              </form>
-          </div>
+	              <!-- Password input-->
+	              <div class="control-group">
+	                <label class="control-label" for="passwordinput">Password:</label>
+	                <div class="controls">
+	                  <input required="" id="passwordinput" name="loginpassword" class="form-control" type="password" placeholder="********" class="input-medium">
+	                </div>
+	              </div>
 
 
-          <div class="tab-pane fade" id="forgotpass">
-              <form action="" method="post" class="form-horizontal" autocomplete="off">
-                <?php
-				//check for any errors
-				if(isset($error)){
-					foreach($error as $error){
-						echo '<p class="bg-danger">'.$error.'</p>';
+	              <!-- Button -->
+	              <div class="control-group">
+	                <label class="control-label" for="signin"></label>
+	                <div class="controls">
+	                  <button id="signin" name="login" class="btn btn-success">Sign In</button>
+	                </div>
+	              </div>
+	              </fieldset>
+	              </form>
+	          </div>
+
+
+	          <div class="tab-pane fade" id="forgotpass">
+	              <form action="" method="post" class="form-horizontal" autocomplete="off">
+	                <?php
+					//check for any errors
+					if(isset($error)){
+						foreach($error as $error){
+							echo '<p class="bg-danger">'.$error.'</p>';
+						}
 					}
-				}
 
-				if(isset($_GET['action'])){
+					if(isset($_GET['action'])){
 
-					//check the action
-					switch ($_GET['action']) {
-						case 'active':
-							echo "<div class='alert alert-success' role='alert'>Your account is now active you may now log in.</div>";
-							break;
-						case 'reset':
-							echo "<div class='alert alert-success' role='alert'>Check inbox for reset email</div>";
-							break;
+						//check the action
+						switch ($_GET['action']) {
+							case 'active':
+								echo "<div class='alert alert-success' role='alert'>Your account is now active you may now log in.</div>";
+								break;
+							case 'reset':
+								echo "<div class='alert alert-success' role='alert'>Check inbox for reset email</div>";
+								break;
+						}
 					}
-				}
-				?>
-              <fieldset>
-              <div class="control-group">
-                <label class="control-label" for="useremail">Email Address:</label>
-                <div class="controls">
-                  <input required="" name="forgotemail" type="text" class="form-control" placeholder="you@domain.com" class="input-medium" required="">
-                </div>
-              </div>
+					?>
+	              <fieldset>
+	              <div class="control-group">
+	                <label class="control-label" for="useremail">Email Address:</label>
+	                <div class="controls">
+	                  <input required="" name="forgotemail" type="text" class="form-control" placeholder="you@domain.com" class="input-medium" required="">
+	                </div>
+	              </div>
 
-              <!-- Button -->
-              <div class="control-group">
-                <label class="control-label" for="signin"></label>
-                <div class="controls">
-                  <button name="forgotsubmit" class="btn btn-success">E-mail Password Reset</button>
-                </div>
-              </div>
-              </fieldset>
-              </form>
-          </div>
+	              <!-- Button -->
+	              <div class="control-group">
+	                <label class="control-label" for="signin"></label>
+	                <div class="controls">
+	                  <button name="forgotsubmit" class="btn btn-success">E-mail Password Reset</button>
+	                </div>
+	              </div>
+	              </fieldset>
+	              </form>
+	          </div>
 
-          <div class="tab-pane fade" id="signup">
-              <form role="form" action="" method="post" autocomplete="off" class="form-horizontal">
-              <fieldset>
-              <!-- Sign Up Form -->
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="Email">Email:</label>
-                <div class="controls">
-                  <input id="Email" name="email" class="form-control" type="text" placeholder="you@domain.com" class="input-large" required="">
-                </div>
-              </div>
+	          <div class="tab-pane fade" id="signup">
+	              <form role="form" action="" method="post" autocomplete="off" class="form-horizontal">
+	              <fieldset>
+	              <!-- Sign Up Form -->
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="Email">Email:</label>
+	                <div class="controls">
+	                  <input id="Email" name="email" class="form-control" type="text" placeholder="Your email address" class="input-large" required="">
+	                </div>
+	              </div>
 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="userid">Username:</label>
-                <div class="controls">
-                  <input id="userid" name="username" class="form-control" type="text" placeholder="JohnDoe" class="input-large" required="">
-                </div>
-              </div>
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Username:</label>
+	                <div class="controls">
+	                  <input id="userid" name="username" class="form-control" type="text" placeholder="JohnDoe" class="input-large" required="">
+	                </div>
+	              </div>
 
-              <!-- Password input-->
-              <div class="control-group">
-                <label class="control-label" for="password">Password:</label>
-                <div class="controls">
-                  <input id="password" name="password1" class="form-control" type="password" placeholder="********" class="input-large" required="">
-                </div>
-              </div>
+	              <!-- Password input-->
+	              <div class="control-group">
+	                <label class="control-label" for="password">Password:</label>
+	                <div class="controls">
+	                  <input id="password" name="password1" class="form-control" type="password" placeholder="********" class="input-large" required="">
+	                </div>
+	              </div>
 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="reenterpassword">Re-Enter Password:</label>
-                <div class="controls">
-                  <input id="reenterpassword" class="form-control" name="password2" type="password" placeholder="********" class="input-large" required="">
-                </div>
-              </div>
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="reenterpassword">Verify Password:</label>
+	                <div class="controls">
+	                  <input id="reenterpassword" class="form-control" name="password2" type="password" placeholder="********" class="input-large" required="">
+	                </div>
+	              </div>
 
 
-              <div class="control-group">
-                <label class="control-label" for="userid">First Name:</label>
-                <div class="controls">
-                  <input id="userid" name="firstname" class="form-control" type="text" placeholder="First Name" class="input-large" required="">
-                </div>
-              </div>
+	              <div class="control-group">
+	                <label class="control-label" for="userid">First Name:</label>
+	                <div class="controls">
+	                  <input id="userid" name="firstname" class="form-control" type="text" placeholder="First Name" class="input-large" required="">
+	                </div>
+	              </div>
 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="userid">Surname:</label>
-                <div class="controls">
-                  <input id="userid" name="surname" class="form-control" type="text" placeholder="Surname" class="input-large" required="">
-                </div>
-              </div>
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Surname:</label>
+	                <div class="controls">
+	                  <input id="userid" name="surname" class="form-control" type="text" placeholder="Surname" class="input-large" required="">
+	                </div>
+	              </div>
 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="userid">Date of Birth:</label>
-                <div class="controls">
-                  <input type="date" name="dateofbirth" class="form-control" class="input-large" required="">
-                </div>
-              </div>
+	              <!-- Text input-->
+	              <div class="control-group">
+	                <label class="control-label" for="userid">Telephone:</label>
+	                <div class="controls">
+	                  <input id="userid" name="phonenumber" class="form-control" type="text" placeholder="07111111111" class="input-large" required="">
+	                </div>
+	              </div>
 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="userid">Telephone:</label>
-                <div class="controls">
-                  <input id="userid" name="phonenumber" class="form-control" type="text" placeholder="07111111111" class="input-large" required="">
-                </div>
-              </div>
+	              <!-- Button -->
+	              <div class="control-group">
+	                <label class="control-label" for="confirmsignup"></label>
+	                <div class="controls">
+	                  <button id="confirmsignup" name="register" class="btn btn-success">Register</button>
+	                </div>
+	              </div>
+	              </fieldset>
+	              </form>
+	        </div>
 
-              <!-- Button -->
-              <div class="control-group">
-                <label class="control-label" for="confirmsignup"></label>
-                <div class="controls">
-                  <button id="confirmsignup" name="register" class="btn btn-success">Register</button>
-                </div>
-              </div>
-              </fieldset>
-              </form>
-        </div>
+	      </div>
+	</div>
 
-      </div>
-</div>
+	        <div class="modal-footer">
+	            <p><a href="#signup" data-toggle="tab">Not Registered?</a></p>
+	            <p><a href="#forgotpass" data-toggle="tab">Forgot Password?</a></p>
+	            <center>
+	              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	            </center>
 
-        <div class="modal-footer">
-            <p>Not a member? <a href="#signup" data-toggle="tab">Sign Up</a></p>
-            <p>Forgot <a href="#forgotpass" data-toggle="tab">Password?</a></p>
-            <center>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </center>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
-  </body>
-  </html>
+	</body>
+	</html>
