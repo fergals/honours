@@ -8,7 +8,7 @@
   <ul class="nav menu">
     <li class="active"><a href="main.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Open Tickets</a></li>
     <li><a href="closedtickets.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-star"></use></svg> Closed Tickets</a></li>
-      <li><a href="newticket.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-star"></use></svg> Submit New Ticket</a></li>
+    <li><a href="newticket.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-star"></use></svg> Submit New Ticket</a></li>
     <li><a href="/knowledgebase/"><svg class="glyph stroked calendar"><use xlink:href="#stroked-star"></use></svg> Knowledge Base</a></li>
   </ul>
 </nav>

@@ -43,7 +43,15 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 								<use xlink:href="#stroked-male-user"></use></svg><?php echo $_SESSION['name'] . " " . $_SESSION['lastname'] . " "; ?><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="profile.php"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
-							<li><a href="../logout.php"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+							<?php
+							if($_SESSION['usertype'] != 'Registered') {
+								echo "<li><a href='/staff/'><svg class='glyph stroked notepad'><use xlink:href='#stroked-notepad'></use></svg> Ticket Management</a></li>
+								      <li><a href='../logout.php'><svg class='glyph stroked cancel'><use xlink:href='#stroked-cancel'></use></svg> Logout</a></li>";
+							}
+							else {
+								echo "<li><a href='../logout.php'><svg class='glyph stroked cancel'><use xlink:href='#stroked-cancel'></use></svg> Logout</a></li>";
+							}
+							?>
 						</ul>
 					</li>
 				</ul>

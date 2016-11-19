@@ -189,25 +189,6 @@ if(empty($userid)){
     </div>
   </div>
 </div>
-
-  <script type="text/javascript">
-  $(document).ready(function() {
-    $(".auto").autocomplete({
-        source: "search.php",
-        minLength: 1,
-        datatype: 'json',
-      },
-        select: function( event, ui ) {
-          $('#firstname').val(ui.item.value : 1);
-          $('#surname').val(ui.item.value : 2);
-          $('#department').val(ui.item.department);
-          $('#email').val(ui.item.email);
-          $('#hidden').val(ui.item.id);
-          return false;
-        }
-    });
-    });
-</script>
 </body>
 
 </html>

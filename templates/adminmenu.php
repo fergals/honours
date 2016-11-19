@@ -63,6 +63,22 @@ $(document).ready(function(){
           }
      });
 });
+$(document).ready(function() {
+  $("#auto").autocomplete({
+      source: "/staff/search.php",
+      minLength: 1,
+      datatype: 'json',
+    },
+      select: function( event, ui ) {
+        $('#firstname').val(ui.item.value);
+        $('#surname').val(ui.item.value);
+        $('#department').val(ui.item.value);
+        $('#email').val(ui.item.value);
+        $('#hidden').val(ui.item.value);
+        return false;
+      }
+  });
+  });
 
 // $(function() {
 //
