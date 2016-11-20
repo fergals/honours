@@ -8,8 +8,9 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/datepicker3.css" rel="stylesheet">
 <link href="../css/styles.css" rel="stylesheet">
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script src="../js/bootstrap.js"></script>
 <!--Icons-->
 <script src="../js/lumino.glyphs.js"></script>
@@ -18,7 +19,6 @@
 <script src="../js/html5shiv.js"></script>
 <script src="../js/respond.min.js"></script>
 <![endif]-->
-
 </head>
 
 <body>
@@ -45,5 +45,5 @@
 				</ul>
 			</div>
 
-		</div><!-- /.container-fluid -->
+		</div>
 	</nav>

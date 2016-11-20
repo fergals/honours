@@ -37,13 +37,14 @@ if(isset($_POST['submitticket'])) {
   $stmt->bindParam(':assigned', $assigned, PDO::PARAM_STR, 10);
   $stmt->execute();
 
-  $ticketsuccess = true;
+  if(empty($userid)){
+      $useriderror = true;
+      $userinfoerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please search for a user or enter user information manually<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+    }
+    else {
+      $ticketsuccess = true;
+    }
 }
-
-if(empty($userid)){
-    $useriderror = true;
-    $userinfoerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please search for a user or enter user information manually<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
-  }
   ?>
 <!-- Breadcrumbs -->
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -81,20 +82,44 @@ if(empty($userid)){
 				</div>
 
 			</div><!--/.col-->
+      <script type="text/javascript">
+      $(function() {
 
+          //autocomplete
+          $(".auto").autocomplete({
+              source: 'search.php',
+              minLength: 1,
+              select: function (e, ui) {
+                $('[name="firstname"]').val(ui.item.firstname);
+                $('[name="surname"]').val(ui.item.surname);
+                $('[name="department"]').val(ui.item.department);
+                $('[name="email"]').val(ui.item.email);
+                $('[name="userid"]').val(ui.item.id);
+              }
+          }).autocomplete( "instance" )._renderItem = function (ul, item) {
+            console.log(item);
+            return $( "<li>" )
+              .append( "<div>" + item.firstname + " " + item.surname + "</div>" )
+              .appendTo( ul );
+          };
+
+      });
+      </script>
+      <form action='' method='post'>
 			<div class="col-md-4">
 				<div class="panel panel-info">
 					<div class="panel-heading"><svg class="glyph stroked calendar"></svg>Enter User Information</div>
 					<div class="panel-body">
 
-                <label>Search for user:</label><input type='text' name='name' value='' id="search" class='form-control auto'>
-              <label>Name:</label><input type='text' name='name' value='' id="firstname" class='form-control auto' readonly>
-              <label>Surname:</label><input type='text' name='surname' id="surname" value='' class='form-control auto'readonly>
-              <label>Department:</label><input type='text' name='department' id="department" value='' class='form-control auto' readonly>
-              <label>Email Address:</label><input type='text' name='email' id="email" value='' class='form-control auto' readonly>
-              <input type="hidden" id="hidden" name="userid" value=''>
+                <label>Search for user:</label><input type='text' name='name' value='' id="auto" class='form-control auto'>
+              <label>Name:</label><input type='text' name='firstname' value='' id="firstname" class='form-control' readonly>
+              <label>Surname:</label><input type='text' name='surname' id="surname" value='' class='form-control'readonly>
+              <label>Department:</label><input type='text' name='department' id="department" value='' class='form-control' readonly>
+              <label>Email Address:</label><input type='text' name='email' id="email" value='' class='form-control' readonly>
+              <label>Userid:</label><input type='text' name='userid' value='' class='form-control' readonly>
 					</div>
 				</div>
+      </form>
 
         <div class="panel panel-info">
           <div class="panel-heading"><svg class="glyph stroked calendar"></svg>Ticket Information</div>

@@ -14,8 +14,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 <link href="/css/styles.css" rel="stylesheet">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../javascript.js"></script>
 <script src="/js/bootstrap.js"></script>
-<!--Icons-->
+
 <script src="/js/lumino.glyphs.js"></script>
 
 <!--[if lt IE 9]>
@@ -57,5 +58,5 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 				</ul>
 			</div>
 
-		</div><!-- /.container-fluid -->
+		</div>
 	</nav>

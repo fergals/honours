@@ -8,36 +8,18 @@ if (isset($_GET['term'])){
         $stmt->execute(array('term' => '%'.$_GET['term'].'%'));
 
         while($row = $stmt->fetch()) {
-          $array = array (
-            'label' => $row['firstname'] . " " . $row['surname'],
-            'value' => $row['firstname'],
-            'surname' => $row['surname'],
-            'email' => $row['email'],
-            'department' => $row['department']
-          );
+          $user = array();
+          // $user[0] = $row['firstname'];
+          // $user[1] = $row['surname'];
+          // $user[2] = $row['department'];
+          // $user[3] = $row['email'];
+          // $user[4] = $row['id'];
+          $userData[] = $row;
+
+            }
+          } catch(PDOException $e) {
+                echo 'ERROR: ' . $e->getMessage();
+            }
+            echo json_encode($userData);
         }
-
-    } catch(PDOException $e) {
-        echo 'ERROR: ' . $e->getMessage();
-    }
-
-
-    echo json_encode($array);
-}
-
-// $(document).ready(function() {
-// $('#firstname').autocomplete({
-//        minLength: 0,
-//        source: 'search.php?term'+$(this).val(),
-//        datatype: 'json',
-//        select: function( event, ui ) {
-//              // insert additional texts in input fields
-//              console.log(ui.item.data);
-//          //$('#firstname').val(ui.item.data.firstname);
-//          $('#surname').val(ui.item.data.surname);
-//          $('#department').val(ui.item.data.department);
-//        }
-//   });
-//   });
-
 ?>

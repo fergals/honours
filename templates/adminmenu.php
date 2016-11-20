@@ -34,10 +34,7 @@
     </li>
   </ul>
 </nav>
-
 </div><!--/.sidebar-->
-<script src="../js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
      $('#search_text').keyup(function(){
@@ -63,22 +60,6 @@ $(document).ready(function(){
           }
      });
 });
-$(document).ready(function() {
-  $("#auto").autocomplete({
-      source: "/staff/search.php",
-      minLength: 1,
-      datatype: 'json',
-    },
-      select: function( event, ui ) {
-        $('#firstname').val(ui.item.value);
-        $('#surname').val(ui.item.value);
-        $('#department').val(ui.item.value);
-        $('#email').val(ui.item.value);
-        $('#hidden').val(ui.item.value);
-        return false;
-      }
-  });
-  });
 
 // $(function() {
 //

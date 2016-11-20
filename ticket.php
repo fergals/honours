@@ -102,7 +102,7 @@ if(isset($_POST['submitcomment'])){
             $ticketinfo = $db->query("SELECT userid, tID, date, queue, category, department, urgency, status FROM ticket where tID = '$ticketid'");
             while($r = $ticketinfo->fetch(PDO::FETCH_OBJ)) {
             $fullticket = $r->tID;
-            $dateformat = date('d/m/Y h:m a', strtotime($r->date));
+            $dateformat = date('d/m/Y h:i a', strtotime($r->date));
             echo '<strong>Status:</strong> ' . $r->status . '<br />';
             echo '<strong>Category:</strong> ' . $r->category . '<br />';
             echo '<strong>Department:</strong> ' . $r->department . '<br /><br />';

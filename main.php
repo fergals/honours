@@ -35,7 +35,7 @@ if(count($opentickets) > 0) {
         <th>Date Submitted</th>
 				<th>Query</th></tr>";
         while($o = $opentickets->fetch(PDO::FETCH_ASSOC)){
-				$dateformat = date('d/m/Y h:m a', strtotime($o['date']));
+				$dateformat = date('d/m/Y h:i a', strtotime($o['date']));
         echo "<tr><td><a href='ticket.php?id=" . $o['tID'] . "'>" . $o['tID'] ."</td>";
         echo "<td>" . $dateformat . "</td>";
         echo "<td>" . substr($o['query'],0,110) . "</td></tr>";
