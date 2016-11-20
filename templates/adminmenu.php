@@ -10,6 +10,30 @@
     <li><a href="unassigned.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-star"></use></svg> Unassigned Queue</a></li>
     <li><a href="depqueue.php"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg><?php echo $_SESSION['department'] . "'s Queue"; ?></a></li>
     <li><a href="newticket.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> New Ticket</a></li>
+
+    <li class="parent ">
+      <a href="#">
+        <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Knowledge Base
+      </a>
+      <ul class="children collapse" id="sub-item-1">
+        <li>
+          <a class="" href="kbadd.php">
+            <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Add Article
+          </a>
+        </li>
+        <li>
+          <a class="" href="kb.php">
+            <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> View Articles
+          </a>
+        </li>
+        <li>
+          <a class="" href="kbmanage.php">
+            <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Manage Categories
+          </a>
+        </li>
+      </ul>
+    </li>
+
     <li class="parent ">
       <a href="#">
         <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Administration
