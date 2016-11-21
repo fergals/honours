@@ -4,7 +4,7 @@ if (isset($_GET['term'])){
     $return_arr = array();
 
     try {
-        $stmt = $db->prepare('SELECT id, firstname, surname, department, email FROM users WHERE firstname LIKE :term');
+        $stmt = $db->prepare('SELECT id, firstname, surname, department, email, usertype FROM users WHERE firstname LIKE :term');
         $stmt->execute(array('term' => '%'.$_GET['term'].'%'));
 
         while($row = $stmt->fetch()) {

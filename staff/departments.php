@@ -9,7 +9,7 @@ $userid = $_SESSION['id'];
 
 if(isset($_POST['newdepartment'])) {
   $department = $_POST['departmentname'];
-  $stmt = $db->prepare("INSERT INTO departments (department, userid, datecreated) VALUES (:category, :userid, :datecreated)");
+  $stmt = $db->prepare("INSERT INTO departments (depname, userid, datecreated) VALUES (:category, :userid, :datecreated)");
   $stmt->bindParam(':userid', $userid, PDO::PARAM_STR, 4);
   $stmt->bindParam(':category', $department, PDO::PARAM_STR, 1000);
 	$stmt->bindParam(':datecreated', $current_date, PDO::PARAM_STR, 60);
@@ -28,7 +28,7 @@ if(isset($_POST['newdepartment'])) {
 if(isset($_POST['editdepartment'])) {
   $catname = $_POST['hiddencatid'];
   $editcat = $_POST['editcat'];
-  $stmt = $db->prepare("UPDATE departments SET department=:department WHERE department=:depname");
+  $stmt = $db->prepare("UPDATE departments SET depname=:department WHERE depname=:depname");
   $stmt->bindParam(':department', $editcat, PDO::PARAM_STR, 100);
   $stmt->bindParam(':depname', $catname, PDO::PARAM_INT,3);
 
@@ -79,10 +79,10 @@ if(isset($_POST['editdepartment'])) {
             <div class="form-group">
               <label>Select Department</label>
               <?php
-              $editcat = $db->query("SELECT department FROM departments ORDER BY department");
+              $editcat = $db->query("SELECT depname FROM departments ORDER BY depname");
               echo "<select multiple class='form-control' size='10' id='catoptions' onchange='selectionchange();'>";
               while ($ec = $editcat->fetch(PDO::FETCH_ASSOC)){
-              echo "<option>" . $ec['department'] . "</option>";
+              echo "<option>" . $ec['depname'] . "</option>";
               }
               echo "</select>";
               ?>

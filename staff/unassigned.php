@@ -36,17 +36,21 @@ $pagename = "Unassigned Queue";
 	        <tr>
 	        <th>Ticket</th>
 	        <th>Date Submitted</th>
+					<th>User</th>
 	        <th>Category</th>
-	        <th>Department</th>
 	        <th>Urgency</th>
 					<th>Assigned</th></tr>";
 
 	  while ($o = $allopen->fetch(PDO::FETCH_ASSOC)){
 					$dateformat = date('d/m/Y - h:i a', strtotime($o['date']));
+					$fullid = $o['tID'];
 	    echo "<tr><td><a href='viewticket.php?id=" . $o['tID'] . "'>" . $o['tID'] ."</td>";
 	    echo "<td>" . $dateformat . "</td>";
+			$getusername = $db->query("SELECT users.id, users.firstname, users.surname, ticket.userid, ticket.tID FROM users INNER JOIN ticket ON users.id=ticket.userid WHERE ticket.tID = '$fullid'");
+			while($u = $getusername->fetch(PDO::FETCH_ASSOC)){
+				echo "<td>" . $u['firstname'] . " " . $u['surname'] . "</td>";
+			}
 	    echo "<td>" . $o['category'] . "</td>";
-	    echo "<td>" . $o['department'] . "</td>";
 	    echo "<td>" . $o['urgency'] . "</td>";
 			echo "<td>Unassigned</tr>";
 	  }

@@ -179,7 +179,10 @@ if(isset($_POST['submitcomment'])) {
                echo "<strong>Name: </strong>". $u->firstname . ' ' . $u->surname ."<br />";
                echo "<strong>E-mail: </strong>". $u->email . "<br />";
                echo "<strong>Phone: </strong>".$u->phonenumber . "<br />";
-               echo "<strong>Department: </strong>".$u->department . "<br />";
+               $displaydep = $db->query("SELECT depname, depid FROM departments WHERE depid = $u->department");
+               while($d = $displaydep->fetch(PDO::FETCH_ASSOC)){
+                 echo "<strong>Department: </strong>". $d['depname'] . "<br>";
+               }
                echo "<strong>Usertype: </strong>".$u->usertype . "<br />";
              }
                ?>

@@ -5,7 +5,6 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/adminheader.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/adminmenu.php');
 
 $pagename = "New Ticket";
-$userid = $_SESSION['id'];
 
 $dateinc = $db->query("SELECT id FROM ticket ORDER BY ID DESC LIMIT 1");
 while ($d = $dateinc->fetch(PDO::FETCH_OBJ)){
@@ -35,13 +34,17 @@ if(isset($_POST['submitticket'])) {
   $stmt->bindParam(':department', $department, PDO::PARAM_STR, 30);
   $stmt->bindParam(':category', $category, PDO::PARAM_STR, 20);
   $stmt->bindParam(':assigned', $assigned, PDO::PARAM_STR, 10);
-  $stmt->execute();
 
   if(empty($userid)){
       $useriderror = true;
       $userinfoerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please search for a user or enter user information manually<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
     }
+  if(empty($query)){
+        $querye = true;
+        $queryerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please enter information for the ticket<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+      }
     else {
+      $stmt->execute();
       $ticketsuccess = true;
     }
 }
@@ -65,7 +68,7 @@ if(isset($_POST['submitticket'])) {
       }
 
       if(isset($useriderror)) {echo $userinfoerror;}
-      if(isset($queryerror)) {echo $querydisplay;}
+      if(isset($querye)) {echo $queryerror;}
       ?>
 
       <form method="post" action="">
@@ -92,7 +95,7 @@ if(isset($_POST['submitticket'])) {
               select: function (e, ui) {
                 $('[name="firstname"]').val(ui.item.firstname);
                 $('[name="surname"]').val(ui.item.surname);
-                $('[name="department"]').val(ui.item.department);
+                $('[name="department"]').val(ui.item.usertype);
                 $('[name="email"]').val(ui.item.email);
                 $('[name="userid"]').val(ui.item.id);
               }
@@ -114,7 +117,7 @@ if(isset($_POST['submitticket'])) {
                 <label>Search for user:</label><input type='text' name='name' value='' id="auto" class='form-control auto'>
               <label>Name:</label><input type='text' name='firstname' value='' id="firstname" class='form-control' readonly>
               <label>Surname:</label><input type='text' name='surname' id="surname" value='' class='form-control'readonly>
-              <label>Department:</label><input type='text' name='department' id="department" value='' class='form-control' readonly>
+              <label>User Type:</label><input type='text' name='department' id="department" value='' class='form-control' readonly>
               <label>Email Address:</label><input type='text' name='email' id="email" value='' class='form-control' readonly>
               <label>Userid:</label><input type='text' name='userid' value='' class='form-control' readonly>
 					</div>
@@ -152,12 +155,12 @@ if(isset($_POST['submitticket'])) {
             }
             echo "</select>";
 
-            $stmt = $db->prepare("SELECT department FROM departments");
+            $stmt = $db->prepare("SELECT depname, depid FROM departments");
             $stmt->execute();
             echo "<label>Department</label>";
             echo "<select name='department' class='form-control'>";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<option value='" . $row['department'] . "'>" . $row['department'] ."</option>";
+            echo "<option value='" . $row['depid'] . "'>" . $row['depname'] ."</option>";
             }
             echo "</select>";
 
@@ -170,7 +173,6 @@ if(isset($_POST['submitticket'])) {
             }
             echo "</select>";
           ?>
-          <button type="submit" class="btn btn-primary">Update Ticket Information</button>
 
           </div>
         </div>
