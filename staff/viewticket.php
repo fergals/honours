@@ -60,13 +60,21 @@ if(isset($_POST['submitcomment'])) {
     $stmt->bindParam(':date', $date, PDO::PARAM_STR, 10000);
     $stmt->bindParam(':comment', $comment, PDO::PARAM_STR, 10000);
     $stmt->bindParam(':hidden', $hidden, PDO::PARAM_STR, 3);
-    $stmt->execute();
+
+    if(empty($comment)){
+      $commente = true;
+      $commenterror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please enter a comment<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+    }
+    else {
+      $stmt->execute();
+    }
   }
     // E-mail users
     if(isset($_POST['sendemail'])){
     $to = $_POST['emailto'];
     $subject = "[$ticketid] Help! Online Support";
     $body = $_POST['emailmsg'];
+    $body .= "<br><br>Do no reply to this e-mail! <br>To add a response please navigate to <a href='http://www.help.fergalsexton.com/'>Help! Online Support System</a> and login to add a comment";
 
     $mail = new Mail();
     $mail->setFrom(SITEMAIL);
@@ -105,6 +113,8 @@ if(isset($_POST['submitcomment'])) {
         <svg class='glyph stroked checkmark'><use xlink:href='#stroked-empty-message'></use></svg> Successfully sent email<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a>
         </div>";
       }
+        if(isset($commente)) {echo $commenterror;}
+
       ?>
 			<div class="col-md-8">
 				<div class="panel panel-default">
@@ -179,7 +189,8 @@ if(isset($_POST['submitcomment'])) {
                echo "<strong>Name: </strong>". $u->firstname . ' ' . $u->surname ."<br />";
                echo "<strong>E-mail: </strong>". $u->email . "<br />";
                echo "<strong>Phone: </strong>".$u->phonenumber . "<br />";
-               $displaydep = $db->query("SELECT depname, depid FROM departments WHERE depid = $u->department");
+
+               $displaydep = $db->query("SELECT depname, depid FROM departments WHERE depid = '$u->department'");
                while($d = $displaydep->fetch(PDO::FETCH_ASSOC)){
                  echo "<strong>Department: </strong>". $d['depname'] . "<br>";
                }
@@ -312,7 +323,6 @@ if(isset($_POST['submitcomment'])) {
     </div>
   </div>
 </div>
-<? require_once ($_SERVER['DOCUMENT_ROOT'].'/config/scripts.php'); ?>
 </body>
 
 </html>

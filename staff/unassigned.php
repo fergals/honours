@@ -61,7 +61,6 @@ $pagename = "Unassigned Queue";
 		</div><!--/.row-->
 	</div>	<!--/.main-->
 </div>
-<? require_once ($_SERVER['DOCUMENT_ROOT'].'/config/scripts.php'); ?>
 </body>
 
 </html>

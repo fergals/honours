@@ -13,7 +13,7 @@
     <li><a href="newticket.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> New Ticket</a></li>
 
     <li class="parent ">
-      <a href="#">
+      <a href="../kb/">
         <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Knowledge Base
       </a>
       <ul class="children collapse" id="sub-item-1">

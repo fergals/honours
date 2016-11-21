@@ -66,8 +66,6 @@ $pagename = "User Management"
 
 			</div><!--/.main-->
 		</div>
-
-<? require_once ($_SERVER['DOCUMENT_ROOT'].'/config/scripts.php'); ?>
 </body>
 
 </html>

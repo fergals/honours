@@ -4,18 +4,54 @@ if(!$user->is_logged_in()){ header('Location: ../uhoh.php'); }
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/adminheader.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/adminmenu.php');
 
-$pagename = "Categories"
-;?>
-<script>
-function selectionchange()
-{
-    var e = document.getElementById("catoptions");
-    var str = e.options[e.selectedIndex].value;
+$pagename = "Manage Categories";
+$userid = $_SESSION['id'];
 
-    document.getElementById('editcat','hiddencatid').value = str;
-    document.getElementById('hiddencatid').value = str;
-}</script>
+if(isset($_POST['newcategory'])) {
+  $department = $_POST['categoryname'];
+  $stmt = $db->prepare("INSERT INTO categories (category, userid, datecreated) VALUES (:category, :userid, :datecreated)");
+  $stmt->bindParam(':userid', $userid, PDO::PARAM_STR, 4);
+  $stmt->bindParam(':category', $department, PDO::PARAM_STR, 1000);
+	$stmt->bindParam(':datecreated', $current_date, PDO::PARAM_STR, 60);
 
+  if(empty($department)){
+      $departmente = true;
+      $departmenterror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please enter a category name<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+    }
+    else {
+      $departmentsuc= true;
+			$stmt->execute();
+      $departmentsuccess = "<div class='alert bg-success' role='alert'><svg class='glyph stroked checkmark'><use xlink:href='#stroked-empty-message'></use></svg> Successfully added new Category<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+    }
+}
+
+if(isset($_POST['editcategory'])) {
+  $catname = $_POST['hiddencatid'];
+  $editcat = $_POST['editcat'];
+  $stmt = $db->prepare("UPDATE categories SET category=:category WHERE category=:catname");
+  $stmt->bindParam(':category', $editcat, PDO::PARAM_STR, 100);
+  $stmt->bindParam(':catname', $catname, PDO::PARAM_INT,3);
+
+  if(empty($editcat)){
+      $editdepe = true;
+      $editdeperror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please select a category before editing<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+    }
+    else {
+			$stmt->execute();
+      $editdeps = true;
+      $editdepsuccess = "<div class='alert bg-success' role='alert'><svg class='glyph stroked checkmark'><use xlink:href='#stroked-empty-message'></use></svg> Successfully edited category<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+    }
+}
+?>
+  <script>
+  function selectionchange()
+  {
+      var e = document.getElementById("catoptions");
+      var str = e.options[e.selectedIndex].value;
+
+      document.getElementById('editcat','hiddencatid').value = str;
+      document.getElementById('hiddencatid').value = str;
+  }</script>
 <!-- Breadcrumbs -->
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div id="result"></div>
@@ -26,58 +62,66 @@ function selectionchange()
 				<li class="active"><?php echo $pagename; ?></li>
 			</ol>
 		</div><!--/.row-->
+    <div class="row">
+      <?php
+      if(isset($departmente)) {echo $departmenterror;}
+      if(isset($departmentsuc)) {echo $departmentsuccess;}
+			if(isset($editdepe)) {echo $editdeperror;}
+			if(isset($editdeps)) {echo $editdepsuccess;}
+      ?>
+      <form method="post" action="">
+			<div class="col-md-8">
 
+				<div class="panel panel-default">
+					<div class="panel-heading" id="accordion"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-open-folder"></use></svg> Amend Current Departments</div>
+					<div class="panel-body">
 
-    <div id="result"></div>
-    <div class="row" id="content">
+            <div class="form-group">
+              <label>Select Category</label>
+              <?php
+              $editcat = $db->query("SELECT category FROM categories ORDER BY category");
+              echo "<select multiple class='form-control' size='10' id='catoptions' onchange='selectionchange();'>";
+              while ($ec = $editcat->fetch(PDO::FETCH_ASSOC)){
+              echo "<option>" . $ec['category'] . "</option>";
+              }
+              echo "</select>";
+              ?>
+            </div>
 
-						<div class="col-md-6">
-							<div class="panel panel-success">
-								<div class="panel-heading dark-overlay">Add New Category</div>
-								<div class="panel-body">
-									<form action="submitcat.php" method="post" />
-									  <div class="form-group">
-									    <label>Name of Category </label>
-									    <input type="text" class="form-control" name="categoryname" id="categoryname">
-									  </div>
-									  <button type="submit" class="btn btn-primary pull-right" name="newcat" id="newcat"> Add</button>
-									</form>
-								</div>
-							</div>
-						</div><!--/.col-->
+            <div class="form-group">
+              <label>Edit Category </label>
+              <input type="text" class="form-control" name="editcat" id="editcat" autocomplete="off">
+              <input type="hidden" name="hiddencatid" id="hiddencatid" />
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" name="editcategory">Edit Category</button>
+					</div>
 
-						<div class="col-md-6">
-							<div class="panel panel-default">
-								<div class="panel-heading dark-overlay">Edit Categories</div>
-								<div class="panel-body">
-									<?php
-									$editcat = $db->query("SELECT category FROM categories ORDER BY category");
-									echo "<select multiple class='form-control' size='10' id='catoptions' onchange='selectionchange();'>";
-									while ($ec = $editcat->fetch(PDO::FETCH_ASSOC)){
-									echo "<option>" . $ec['category'] . "</option>";
-									}
-									echo "</select>";
-									?>
-									<br />
-									<form class="form-inline" action="submitcat.php" method="post" />
-									  <div class="form-group">
-									    <label>Edit</label>
-									    <input type="text" class="form-control" name="editcat" id="editcat">
-									    <input type="hidden" name="hiddencatid" id="hiddencatid" />
-									  </div>
-									  <button type="submit" class="btn btn-default">Edit Category Name</button>
-									  <button type="submit" class="btn btn-danger">Delete Category</button>
-									</form>
-								</div>
-							</div>
-						</div><!--/.col-->
-				</div><!--/.row-->
+				</div>
 
+			</div><!--/.col-->
 
-			</div><!--/.main-->
-    </div>
+      <div class="col-md-8">
 
-<? require_once ($_SERVER['DOCUMENT_ROOT'].'/config/scripts.php'); ?>
+				<div class="panel panel-default">
+					<div class="panel-heading" id="accordion"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-folder"></use></svg> Add Category</div>
+					<div class="panel-body">
+
+            <div class="form-group">
+              <label>Name of Category</label>
+              <input class="form-control" name="categoryname" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" name="newcategory">New Category</button>
+					</div>
+
+				</div>
+
+			</div><!--/.col-->
+
+		</div><!--/.row-->
+	</div>	<!--/.main-->
+</form>
+
+</div>
 </body>
 
 </html>

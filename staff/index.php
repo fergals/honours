@@ -55,6 +55,9 @@ $firstname = $_SESSION['name'];
 	  }
 	  echo "</table>";
 	}
+	else{
+		echo "You have no assigned tickets";
+	}
 	?>
 </div>
 </div>
@@ -64,7 +67,6 @@ $firstname = $_SESSION['name'];
 			</div><!--/.col-->
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-<? require_once ($_SERVER['DOCUMENT_ROOT'].'/config/scripts.php'); ?>
 </body>
 
 </html>

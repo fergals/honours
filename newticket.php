@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
     $userid = $_SESSION['id'];
     $query = $_POST['query'];
     $date = date("Y-m-d H:i:s");
-    $queue = "1stline";
+    $queue = "1st Line";
     $status = "Open";
     $urgency = "Low";
     $department = "14";
@@ -60,13 +60,19 @@ if(isset($_POST['submit'])) {
 		</div><!--/.row-->
 
 
-			<div class="col-lg-12">
+			<div class="col-lg-8">
 				<div class="panel panel-default">
+          <div class="panel-heading" id="accordion"><svg class="glyph stroked two-messages"><use xlink:href="#stroked-two-messages"></use></svg> Submit A Ticket</div>
 							<div class="panel-body">
                 <p> Explain your issue succinctly but include information we need such as what you were doing when the problem occurred or where it has happened.</p>
+                <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+                //<![CDATA[
+                bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+                //]]>
+                </script>
                 <form class="form-horizontal" action="" method="post" />
                   <div class="form-group">
-                      <textarea class='form-control' rows='5' name='query' placeholder="Please enter your query here"></textarea>
+                      <textarea class='form-control' rows='10' name='query' placeholder="Please enter your query here"></textarea>
                   </div>
 
                   <div class="form-group">
@@ -79,5 +85,17 @@ if(isset($_POST['submit'])) {
 </div>
 
 			</div><!--/.col-->
+      <div class="col-md-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						Knowledge Base?
+					</div>
+					<div class="panel-body">
+						<p>Our most common questions have already been answered in our <a href="/kb">Knowledge Base</a></p>
+            <p>This is the quickest method for resolutions for our most common asked questions</p>
+					</div>
+				</div>
+			</div>
+
 		</div><!--/.row-->
 	</div>	<!--/.main-->

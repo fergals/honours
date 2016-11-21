@@ -43,6 +43,9 @@ if(count($opentickets) > 0) {
       echo "</table>";
       echo "<br />";
 }
+else {
+	echo "You have no open tickets";
+}
 
 ?>
 </div>

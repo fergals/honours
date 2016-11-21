@@ -14,6 +14,7 @@ ini_set('display_errors', 'on');
 
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/styles.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/minified/jquery-ui.min.css" type="text/css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="/js/bootstrap.js"></script>
@@ -47,6 +48,22 @@ ini_set('display_errors', 'on');
 
 		</div><!-- /.container-fluid -->
 	</nav>
+<div class="searchcontainer">
+	<div id="searchheader" class="searchheader">
+		<div id="searchheader" class="col-sm-6 col-sm-offset-3">
+		<div id="imaginary_container">
+				<div class="input-group stylish-input-group">
+						<input type="text" class="form-control"  placeholder="Search" >
+						<span class="input-group-addon">
+								<button type="submit">
+										<span class="glyphicon glyphicon-search"></span>
+								</button>
+						</span>
+				</div>
+		</div>
+	</div>
+</div>
+</div>
 
 <div class="container">
 	<div class="row">

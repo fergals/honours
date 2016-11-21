@@ -243,7 +243,7 @@ if(isset($_POST['forgotsubmit'])){
 			<div class="col-md-4">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						Frequently Asked Questions
+						<a href="/kb/">Frequently Asked Questions</a>
 					</div>
 					<div class="panel-body">
 						<p>Have you tried searching for your answer in our KnowledgeBase?</p> <p>Our most frequently asked questions are displayed here to allow for a quick resolution.</p>
@@ -254,7 +254,7 @@ if(isset($_POST['forgotsubmit'])){
 			<div class="col-md-4">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						Submit a ticket
+						<a href="" data-toggle="modal" data-target="#loginmodal">Submit a ticket</a>
 					</div>
 					<div class="panel-body">
 						<p>If you are unable to find your answer in our Knowledgebase, please login and submit to a ticket.</p>

@@ -17,7 +17,7 @@ if(count($stmt) > 0)
      {
           $output .= '
                <tr>
-                    <td><a href="viewticket.php?id=" . $o["tID"] . "">' . $row["tID"] . '</td>
+                    <td><a href="viewticket.php?id='. $row["tID"] .'">' . $row["tID"] . '</td>
                     <td>'.$row["query"].'</td>
                </tr>
           ';

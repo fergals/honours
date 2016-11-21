@@ -3,6 +3,7 @@ require ($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 if(!$user->is_logged_in()){ header('Location: ../uhoh.php'); }
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/header.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/menu.php');
+require 'staff/functions.php';
 
 $ticketid = $_GET['id'];
 $pagename = $ticketid;
@@ -62,7 +63,7 @@ if(isset($_POST['submitcomment'])){
 					</div>
           <div class="panel-footer">
             <ul>
-              <?php $comments = $db->query("SELECT comments.comment, comments.date, users.firstname, users.surname, users.department FROM comments INNER JOIN users ON comments.userid=users.id WHERE comments.tID = '$ticketid'");
+              <?php $comments = $db->query("SELECT comments.comment, comments.hidden, comments.date, users.firstname, users.surname, users.department FROM comments INNER JOIN users ON comments.userid=users.id WHERE comments.tID = '$ticketid' and comments.hidden='NO'");
               while($c = $comments->fetch(PDO::FETCH_ASSOC)) {
                 $dateformat = date('d/m/Y - h:m a', strtotime($c['date']));
                 echo "
@@ -105,7 +106,10 @@ if(isset($_POST['submitcomment'])){
             $dateformat = date('d/m/Y h:i a', strtotime($r->date));
             echo '<strong>Status:</strong> ' . $r->status . '<br />';
             echo '<strong>Category:</strong> ' . $r->category . '<br />';
-            echo '<strong>Department:</strong> ' . $r->department . '<br /><br />';
+            $displaydep = $db->query("SELECT depname, depid FROM departments WHERE depid = $r->department");
+            while($d = $displaydep->fetch(PDO::FETCH_ASSOC)){
+              echo "<strong>Department: </strong>". $d['depname'] . "<br>";
+            }
             echo '<strong>Submitted:</strong> ' . $dateformat;
             }
                ?>
