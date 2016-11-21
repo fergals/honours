@@ -170,6 +170,7 @@ if(isset($_POST['submitticket'])) {
             }
             echo "</select>";
           ?>
+          <button type="submit" class="btn btn-primary">Update Ticket Information</button>
 
           </div>
         </div>

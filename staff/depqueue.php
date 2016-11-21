@@ -3,8 +3,9 @@ require ($_SERVER['DOCUMENT_ROOT'].'/config/dbconnect.php');
 if(!$user->is_logged_in()){ header('Location: ../uhoh.php'); }
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/adminheader.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/templates/adminmenu.php');
+require 'functions.php';
 
-$pagename = "Your Assigned Tickets"
+$pagename = $depname . "'s Assigned Tickets";
 ;?>
 
 <!-- Breadcrumbs -->
@@ -21,7 +22,7 @@ $pagename = "Your Assigned Tickets"
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 							<div class="panel-heading">
-								<strong><?php echo $_SESSION['department']?>'s Queue</strong>
+								<strong><?php echo $depname . "'s Queue"; ?></strong>
 							</div>
 							<div class="panel-body">
 
@@ -29,8 +30,9 @@ $pagename = "Your Assigned Tickets"
 		<?php
 
 		$department = $_SESSION['department'];
+		$userid = $_SESSION['id'];
 
-		$stmt = $db->query("SELECT depid FROM departments = $department");
+		$stmt = $db->query("SELECT department FROM users where id = $userid");
 		$depid = $stmt->fetchColumn(0);
 
 	  $allopen = $db->query("SELECT tID, id, date, userid, category, department, urgency, assigned, id, status FROM ticket WHERE department = '$depid' ORDER BY date ASC");
@@ -42,16 +44,14 @@ $pagename = "Your Assigned Tickets"
 	        <th>Ticket</th>
 	        <th>Date Submitted</th>
 	        <th>Category</th>
-	        <th>Department</th>
 	        <th>Urgency</th>
 					<th>Assigned</th></tr>";
 
 	  while ($o = $allopen->fetch(PDO::FETCH_ASSOC)){
-					$dateformat = date('d/m/Y', strtotime($o['date']));
+					$dateformat = date('d/m/Y - h:i a', strtotime($o['date']));
 	    echo "<tr><td><a href='viewticket.php?id=" . $o['tID'] . "'>" . $o['tID'] ."</td>";
 	    echo "<td>" . $dateformat . "</td>";
 	    echo "<td>" . $o['category'] . "</td>";
-	    echo "<td>" . $o['department'] . "</td>";
 	    echo "<td>" . $o['urgency'] . "</td>";
 			echo "<td>Unassigned</tr>";
 	  }

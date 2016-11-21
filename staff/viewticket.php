@@ -126,7 +126,7 @@ if(isset($_POST['submitcomment'])) {
 						<ul>
               <?php $comments = $db->query("SELECT comments.comment, comments.date, users.firstname, users.surname, users.department FROM comments INNER JOIN users ON comments.userid=users.id WHERE comments.tID = '$ticketid'");
                  while($c = $comments->fetch(PDO::FETCH_ASSOC)) {
-                   $dateformat = date('d/m/Y - h:m a', strtotime($c['date']));
+                   $dateformat = date('d/m/Y - h:i a', strtotime($c['date']));
                    echo "
                    			 <div class='chat-body clearfix'>
                    			 <div class='header'>
@@ -236,16 +236,22 @@ if(isset($_POST['submitcomment'])) {
               }
               echo "</select><br />";
 
-              //Populate DEPARTMENT dropdown from DB
-              $getdepartment = $db->query("SELECT department FROM departments");
-              echo "<label>Department</label>";
-              echo "<select class='form-control' name='department'>";
-              echo "<option value='" . $r->department . "' selected>" . $r->department . "</option>";
-              while($dp = $getdepartment->fetch(PDO::FETCH_ASSOC)){
-                echo "<option value=" . $dp['department'] . ">" . $dp['department'] . "</option>";
-              }
-              echo "</select><br /><br />";
+
+             //Populate DEPARTMENT dropdown from DB
+             echo "<label>Department</label>";
+             echo "<select class='form-control' name='department'>";
+             $stmt= $db->query("SELECT departments.depid, departments.depname, ticket.department, ticket.tID FROM departments INNER JOIN ticket ON departments.depid=ticket.department WHERE ticket.tID = '$ticketid'");
+             while($dp = $stmt->fetch(PDO::FETCH_ASSOC)){
+               echo "<option value='" . $dp['depid'] . "'>" . $dp['depname'] . "</option>";
              }
+            $getfulldep = $db->query("SELECT depid, depname FROM departments");
+             while($dp = $getfulldep->fetch(PDO::FETCH_ASSOC)){
+               echo "<option value='" . $dp['depid'] . "'>" . $dp['depname'] . "</option>";
+             }
+             echo "</select><br />";
+           }
+
+
 
              //Populate users dropdown from DB
              $getusers = $db->query("SELECT id, firstname, surname FROM users");
@@ -261,7 +267,6 @@ if(isset($_POST['submitcomment'])) {
              echo "<div class='text-center'><button class='btn btn-primary' name='updateticket' id='updateticket'>Update Ticket Details</button></div></form>";
             }
           ?>
-
           </div>
         </div>
 

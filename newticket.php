@@ -21,9 +21,9 @@ if(isset($_POST['submit'])) {
     $queue = "1stline";
     $status = "Open";
     $urgency = "Low";
-    $department = "None";
+    $department = "14";
     $category = "None";
-    $assigned = "1"; //auto apply ticket to unassigned (userid: 1)
+    $assigned = "1";
 
     $stmt = $db->prepare("INSERT INTO ticket (tID, userid, query, date, queue, status, urgency, department, category, assigned) VALUES (:tID, :userid, :query, :date, :queue, :status, :urgency, :department, :category, :assigned)");
     $dateinc = $db->query("SELECT id FROM ticket ORDER BY ID DESC LIMIT 1");

@@ -26,6 +26,11 @@ if(isset($_POST['submitarticle'])) {
 
   $stmt->execute();
 
+  if(empty($category)){
+      $categorye = true;
+      $categoryerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please select a category<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+    }
+
   if(empty($title)){
       $titlee = true;
       $titleerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please enter a title for the article<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
@@ -34,6 +39,10 @@ if(isset($_POST['submitarticle'])) {
         $articlee = true;
         $articleerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please enter information for the article<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
       }
+      if(empty($category)){
+          $categorye = true;
+          $categoryerror = "<div class='alert bg-danger' role='alert'><svg class='glyph stroked cancel'><use xlink:href=''#stroked-cancel'></use></svg> Please select a category<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
+        }
     else {
       $articlesuc= true;
       $articlesuccess = "<div class='alert bg-success' role='alert'><svg class='glyph stroked checkmark'><use xlink:href='#stroked-empty-message'></use></svg> Successfully added new Article to Knowledge Base<a href='#' class='pull-right'><span class='glyphicon glyphicon-remove'></span></a></div>";
@@ -55,6 +64,7 @@ if(isset($_POST['submitarticle'])) {
       if(isset($titlee)) {echo $titleerror;}
       if(isset($articlee)) {echo $articleerror;}
       if(isset($articlesuc)) {echo $articlesuccess;}
+      if(isset($categorye)) {echo $categoryerror;}
       ?>
       <form method="post" action="">
 			<div class="col-md-8">
@@ -68,6 +78,12 @@ if(isset($_POST['submitarticle'])) {
             </div>
 
             <div class="form-group">
+              <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+              //<![CDATA[
+              bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+              //]]>
+              </script>
+
               <textarea class="form-control" rows="15" name="article" placeholder="Write the full article here"></textarea>
             </div>
             <button class="btn btn-primary pull-right" name="submitarticle" type="submit">Submit Article to Knowledge Base</button>
@@ -83,19 +99,13 @@ if(isset($_POST['submitarticle'])) {
           <div class="panel-heading"><svg class="glyph stroked calendar"></svg>Article Details</div>
           <div class="panel-body">
             <?php
-            $stmt = $db->prepare("SELECT status FROM status");
+            $stmt = $db->prepare("SELECT categoryid, category FROM kbcategory ");
             $stmt->execute();
-            echo "<label>Categoriy</label>";
+            echo "<label>Category</label>";
             echo "<select name='category' class='form-control'>";
-            echo "<option value='1'>One</option>";
-            echo "</select>";
-
-            $stmt = $db->prepare("SELECT qname FROM queues");
-            $stmt->execute();
-            echo "<label>Sub Category</label>";
-            echo "<select name='queue' class='form-control'>";
+            echo "<option disabled selected value>Select a category</option>";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<option value='" . $row['qname'] . "'>" . $row['qname'] ."</option>";
+            echo "<option value='" . $row['categoryid'] . "'>" . $row['category'] ."</option>";
             }
             echo "</select>";
 

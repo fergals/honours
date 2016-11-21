@@ -75,12 +75,12 @@ if(isset($_POST['updateuser'])) {
 								              <option value='Operator'>Operator</option>
 								              <option value='Registered'>Registered</option></select><br></div></div>";
 								      //Populate DEPARTMENT dropdown from DB
-								      $getdepartment = $db->query("SELECT department FROM departments");
+								      $getdepartment = $db->query("SELECT depid, depname FROM departments");
 								        echo "<div class='form-group'><label class='col-sm-2 control-label'>Department</label>
 								              <div class='col-sm-10'><select name='department' class='form-control'>";
 								        echo "<option value='" . $o['department'] . "' selected>" . $o['department'] . "</option>";
 								        while($dp = $getdepartment->fetch(PDO::FETCH_ASSOC)){
-								        echo "<option value=" . $dp['department'] . ">" . $dp['department'] . "</option>";
+								        echo "<option value=" . $dp['depid'] . ">" . $dp['depname'] . "</option>";
 								      }
 								      echo "</select></div></div>";
 								      echo "<div class='form-group'><div class='col-sm-offset-2 col-sm-10'><button type='submit' class='btn btn-default' name='updateuser'>Update User</button></div></div></div></form>";

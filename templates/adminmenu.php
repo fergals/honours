@@ -1,3 +1,4 @@
+<?php require 'functions.php'; ?>
 <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
   <form role="search">
     <div class="form-group">
@@ -8,7 +9,7 @@
   <ul class="nav menu">
     <li class="active"><a href="index.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
     <li><a href="unassigned.php"><svg class="glyph stroked calendar"><use xlink:href="#stroked-star"></use></svg> Unassigned Queue</a></li>
-    <li><a href="depqueue.php"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg><?php echo $_SESSION['department'] . "'s Queue"; ?></a></li>
+    <li><a href="depqueue.php"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg><?php echo $depname . "'s Queue"; ?></a></li>
     <li><a href="newticket.php"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> New Ticket</a></li>
 
     <li class="parent ">
@@ -27,7 +28,7 @@
           </a>
         </li>
         <li>
-          <a class="" href="kbmanage.php">
+          <a class="" href="kbcategories.php">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Manage Categories
           </a>
         </li>
@@ -35,10 +36,10 @@
     </li>
 
     <li class="parent ">
-      <a href="#">
-        <span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Administration
+      <a href="#" data-toggle="collapse">
+        <span data-toggle="collapse" href="#sub-item-2"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down" ></use></svg></span> Administration
       </a>
-      <ul class="children collapse" id="sub-item-1">
+      <ul class="children collapse" id="sub-item-2">
         <li>
           <a class="" href="categories.php">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Categories
@@ -84,14 +85,4 @@ $(document).ready(function(){
           }
      });
 });
-
-// $(function() {
-//
-//     //autocomplete
-//     $(".auto").autocomplete({
-//         source: "search.php",
-//         minLength: 1
-//     });
-//
-// });
 </script>
